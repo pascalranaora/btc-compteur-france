@@ -303,7 +303,7 @@ def generate_html():
         button {{ padding: 10px; background: #FF9900; color: white; border: none; cursor: pointer; }}
 
         .updating {{ color: #ccc; font-size: 0.9em; text-align: center; margin-top: 20px; }}
-        /* Tooltip Styles - Updated for ! icon */
+        /* Tooltip Styles - Updated for ? icon */
         .tooltip {{
             position: relative;
             display: inline-block;
@@ -319,9 +319,10 @@ def generate_html():
             padding: 10px;
             position: absolute;
             z-index: 1;
-            bottom: 125%;
+            top: 125%;
             left: 50%;
             margin-left: -45px;
+            margin-bottom: -45px;
             opacity: 0;
             transition: opacity 0.3s;
             border: 1px solid #F7931A;
@@ -331,7 +332,7 @@ def generate_html():
         .tooltip .tooltiptext::after {{
             content: "";
             position: absolute;
-            top: 100%;
+            bottom: 100%;
             right: 80%;
             margin-left: -5px;
             border-width: 5px;
@@ -455,7 +456,7 @@ def generate_html():
                     <li>Pour maximiser l'utilité du minage de Bitcoin dans la société : une fois une certaine stabilité des dépenses et de la société atteinte, les profits du minage pourraient servir au bien-être des populations, au développement des énergies renouvelables, à l'agroécologie et encore en projetant à plus long-terme : à aider la transition bas-carbone des pays du Sud par exemple.</li>
                     <li><a href="https://x.com/i/grok/share/vxt7T2ufIWKKPaWyWEj0I5Mtl" target="_blank">Le Bitcoin peut devenir un grand allié pour accélérer la transition énergétique</a>. Mais il faut interdire l’utilisation de combustible fossile dans le minage Bitcoin sous peine de lourdes sanctions et réguler le minage pour que l'usage n'empiète pas sur la consommation d'électricité courante (optimisation sous contraintes).</li>
                     <li><a href="https://b1m.io/" target="_blank">Bitcoin suit une loi de puissance</a> et le rendement futur pourrait être projeté avec un écart type d'erreur.</li>                    
-                    <li>📚 En apprendre plus sur Bitcoin avec <b><a href="https://tinyurl.com/viebitcoin" target="_blank" style="color: orange;">un article scientifique qui lui est dédié</a></b> (vu la densité du sujet, il faut peut-être y consacrer un effort espacé dans le temps). 📚</li>
+                    <li>📚 En apprendre plus sur Bitcoin avec <b><a href="https://www.livre-bitcoin.fr" target="_blank" style="color: orange;">un livre en ligne scientifique qui lui est dédié</a></b> (vue la densité du sujet, il faut peut-être y consacrer un effort espacé dans le temps). 📚</li>
                 </ul>
                 <br />
                 <button type="button" class="collapsible"><h4>Cliquez ici pour plus d'explications techniques sur le script.</h4></button>

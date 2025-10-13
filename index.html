@@ -157,7 +157,7 @@
         button { padding: 10px; background: #FF9900; color: white; border: none; cursor: pointer; }
 
         .updating { color: #ccc; font-size: 0.9em; text-align: center; margin-top: 20px; }
-        /* Tooltip Styles - Updated for ! icon */
+        /* Tooltip Styles - Updated for ? icon */
         .tooltip {
             position: relative;
             display: inline-block;
@@ -173,9 +173,10 @@
             padding: 10px;
             position: absolute;
             z-index: 1;
-            bottom: 125%;
+            top: 125%;
             left: 50%;
-            margin-left: -45px;
+            margin-left: 0px;
+            margin-bottom: -45px;
             opacity: 0;
             transition: opacity 0.3s;
             border: 1px solid #F7931A;
@@ -185,7 +186,7 @@
         .tooltip .tooltiptext::after {
             content: "";
             position: absolute;
-            top: 100%;
+            bottom: 100%;
             right: 80%;
             margin-left: -5px;
             border-width: 5px;
@@ -275,7 +276,7 @@
                 <option value="15">15%</option>
             </select>
             
-            <div class="label">MW/Jour Nécessaires <span class="tooltip"><span class="tooltip-icon">?</span><span class="tooltiptext">Pour miner, il faut de l'électricité. Ici, il s'agirait, par exemple, de surplus nucléaire et énergies intermittentes bas-carbone disponible chaque jour en France pour optimiser & limiter les gaspillages sur le réseau électrique France.</span></span></div>
+            <div class="label">MW/Jour Nécessaires <span class="tooltip"><span class="tooltip-icon">?</span><span class="tooltiptext">Pour miner, il faut de l'électricité. Ici, il s'agirait, par exemple, de surplus nucléaire et énergies intermittentes bas-carbone disponible chaque jour en France pour optimiser & limiter les gaspillages sur le réseau électrique France (optimisation sous contraintes).</span></span></div>
             <div class="counter" id="mwhCounter">0</div>
 
             <div class="label">Total Manqués (€) <span class="tooltip"><span class="tooltip-icon">?</span><span class="tooltiptext">Valeur actuelle des BTC manqués (coût d'opportunité total en milliards €). Pour 3% par exemple, >10 milliards € aujourd'hui. Formule (BTC minés × prix actuel), sans déduire coûts (élec ~3 Md€ sur période).</span></span></div>
@@ -448,9 +449,9 @@
         }
 
         // Données embeddées initiales
-        const initialTotalEuros = 9810259504;
+        const initialTotalEuros = 9308955090;
         const initialBtc = 95668.78125;
-        const initialPrice = 102544;
+        const initialPrice = 97304;
         const initialBlocks = 418967;
         const histData = [{"x": 2018.0, "y": 10000}, {"x": 2025.0, "y": 97000}];
         const powerData = [{"x": 2025.766598220397, "y": 97304.00000000001}, {"x": 2025.848733744011, "y": 100003.59879603065}, {"x": 2025.930869267625, "y": 102764.41811902485}, {"x": 2026.013004791239, "y": 105587.53917770676}, {"x": 2026.0951403148529, "y": 108474.05690456343}, {"x": 2026.1772758384668, "y": 111425.08006252268}, {"x": 2026.2594113620808, "y": 114441.7313519402}, {"x": 2026.3415468856947, "y": 117525.14751789582}, {"x": 2026.4236824093086, "y": 120676.4794577979}, {"x": 2026.5058179329226, "y": 123896.89232929541}, {"x": 2026.5879534565365, "y": 127187.56565849719}, {"x": 2026.6700889801505, "y": 130549.69344849764}, {"x": 2026.7522245037646, "y": 133984.4842882084}, {"x": 2026.8343600273786, "y": 137493.16146149536}, {"x": 2026.9164955509925, "y": 141076.96305662065}, {"x": 2026.9986310746065, "y": 144737.14207598867}, {"x": 2027.0807665982204, "y": 148474.9665461957}, {"x": 2027.1629021218343, "y": 152291.7196283832}, {"x": 2027.2450376454483, "y": 156188.69972889285}, {"x": 2027.3271731690622, "y": 160167.22061022435}, {"x": 2027.4093086926762, "y": 164228.61150229417}, {"x": 2027.4914442162901, "y": 168374.21721399558}, {"x": 2027.5735797399043, "y": 172605.3982450589}, {"x": 2027.6557152635182, "y": 176923.53089821155}, {"x": 2027.7378507871322, "y": 181330.00739163754}, {"x": 2027.8199863107461, "y": 185826.23597173573}, {"x": 2027.90212183436, "y": 190413.6410261763}, {"x": 2027.984257357974, "y": 195093.6631972549}, {"x": 2028.066392881588, "y": 199867.75949554413}, {"x": 2028.148528405202, "y": 204737.40341384176}, {"x": 2028.2306639288158, "y": 209704.08504141498}, {"x": 2028.3127994524298, "y": 214769.3111785403}, {"x": 2028.3949349760437, "y": 219934.60545133892}, {"x": 2028.4770704996577, "y": 225201.50842690642}, {"x": 2028.5592060232718, "y": 230571.57772873668}, {"x": 2028.6413415468858, "y": 236046.3881524396}, {"x": 2028.7234770704997, "y": 241627.53178175198}, {"x": 2028.8056125941137, "y": 247316.6181048408}, {"x": 2028.8877481177276, "y": 253115.27413089908}, {"x": 2028.9698836413415, "y": 259025.14450703296}, {"x": 2029.0520191649555, "y": 265047.8916354405}, {"x": 2029.1341546885694, "y": 271185.19579088094}, {"x": 2029.2162902121834, "y": 277438.75523843395}, {"x": 2029.2984257357973, "y": 283810.2863515493}, {"x": 2029.3805612594113, "y": 290301.52373038523}, {"x": 2029.4626967830254, "y": 296914.2203204359}, {"x": 2029.5448323066394, "y": 303650.14753144723}, {"x": 2029.6269678302533, "y": 310511.09535662056}, {"x": 2029.7091033538672, "y": 317498.8724921037}, {"x": 2029.7912388774812, "y": 324615.3064567691}, {"x": 2029.8733744010951, "y": 331862.2437122783}, {"x": 2029.955509924709, "y": 339241.54978343286}, {"x": 2030.037645448323, "y": 346755.1093788102}, {"x": 2030.119780971937, "y": 354404.8265116855}, {"x": 2030.201916495551, "y": 362192.62462123734}, {"x": 2030.2840520191648, "y": 370120.4466940384}, {"x": 2030.366187542779, "y": 378190.25538582954}, {"x": 2030.448323066393, "y": 386404.0331435775}, {"x": 2030.530458590007, "y": 394763.7823278153}, {"x": 2030.6125941136208, "y": 403271.52533526515}, {"x": 2030.6947296372348, "y": 411929.3047217439}];
@@ -667,7 +668,7 @@
             
             // Recalculer A si exposant change (calibré sur prix actuel ~123000 USD)
             const currentDays = getDaysFromGenesis(2025);
-            const currentPrice = 102544;
+            const currentPrice = 97304;
             A_POWER_LAW = currentPrice / Math.pow(currentDays, exponent);
             
             // Calcul des données
