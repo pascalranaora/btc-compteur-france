@@ -347,21 +347,16 @@
                         <span id="growthValue">30</span>
                     </div>
                     
-                    <div class="slider-container">
-                        <label>Taux USD/EUR : <span class="tooltip"><span class="tooltiptext">Taux de change pour convertir projections USD en EUR (actuel ~0.85).</span></span></label>
-                        <input type="range" id="exchangeSlider" min="0.5" max="1.5" step="0.01" value="0.85">
-                        <span id="exchangeValue">0.85</span>
-                    </div>
                     
                     <div id="results-table"></div>
                     
                     <h2>Évolution Projetée du Prix du Bitcoin (USD)</h2>
                     <canvas id="priceChart" width="800" height="400"></canvas>
                     
-                    <h2>Revenus Annuels Projetés (M EUR)</h2>
+                    <h2>Revenus Annuels Projetés (M €)</h2>
                     <canvas id="revenueChart" width="800" height="400"></canvas>
                     
-                    <h2>Revenus Cumulés Projetés (M EUR)</h2>
+                    <h2>Revenus Cumulés Projetés (M €)</h2>
                     <canvas id="cumulativeChart" width="800" height="400"></canvas>
                 </div>            
         </div>
@@ -449,15 +444,15 @@
         }
 
         // Données embeddées initiales
-        const initialTotalEuros = 9497836819;
-        const initialBtc = 95708.625;
-        const initialPrice = 99237;
-        const initialBlocks = 419392;
+        const initialTotalEuros = 8679559878;
+        const initialBtc = 95766.0;
+        const initialPrice = 90633;
+        const initialBlocks = 420004;
         const histData = [{"x": 2018.0, "y": 10000}, {"x": 2025.0, "y": 97000}];
-        const powerData = [{"x": 2025.7748117727583, "y": 99237.0}, {"x": 2025.8569472963723, "y": 101988.86461256706}, {"x": 2025.9390828199862, "y": 104803.10426845684}, {"x": 2026.0212183436004, "y": 107680.82002603576}, {"x": 2026.1033538672143, "y": 110623.12691256493}, {"x": 2026.1854893908283, "y": 113631.15403273066}, {"x": 2026.2676249144422, "y": 116706.04467748973}, {"x": 2026.3497604380561, "y": 119848.9564332287}, {"x": 2026.43189596167, "y": 123061.06129123666}, {"x": 2026.514031485284, "y": 126343.54575749097}, {"x": 2026.596167008898, "y": 129697.61096275518}, {"x": 2026.678302532512, "y": 133124.47277298867}, {"x": 2026.7604380561258, "y": 136625.36190006745}, {"x": 2026.84257357974, "y": 140201.52401281547}, {"x": 2026.924709103354, "y": 143854.21984834585}, {"x": 2027.006844626968, "y": 147584.7253237115}, {"x": 2027.0889801505818, "y": 151394.33164786454}, {"x": 2027.1711156741958, "y": 155284.34543392403}, {"x": 2027.2532511978097, "y": 159256.0888117514}, {"x": 2027.3353867214237, "y": 163310.89954083262}, {"x": 2027.4175222450376, "y": 167450.13112346767}, {"x": 2027.4996577686516, "y": 171675.1529182652}, {"x": 2027.5817932922655, "y": 175987.35025394324}, {"x": 2027.6639288158794, "y": 180388.12454343468}, {"x": 2027.7460643394934, "y": 184878.89339829682}, {"x": 2027.8281998631076, "y": 189461.0907434252}, {"x": 2027.9103353867215, "y": 194136.16693207045}, {"x": 2027.9924709103354, "y": 198905.5888611581}, {"x": 2028.0746064339494, "y": 203770.84008691026}, {"x": 2028.1567419575633, "y": 208733.4209407695}, {"x": 2028.2388774811773, "y": 213794.84864562354}, {"x": 2028.3210130047912, "y": 218956.6574323309}, {"x": 2028.4031485284052, "y": 224220.39865654623}, {"x": 2028.485284052019, "y": 229587.64091584604}, {"x": 2028.567419575633, "y": 235059.97016715282}, {"x": 2028.649555099247, "y": 240638.9898444581}, {"x": 2028.7316906228612, "y": 246326.32097684365}, {"x": 2028.813826146475, "y": 252123.6023068005}, {"x": 2028.895961670089, "y": 258032.49040884423}, {"x": 2028.978097193703, "y": 264054.65980842826}, {"x": 2029.060232717317, "y": 270191.8031011517}, {"x": 2029.1423682409309, "y": 276445.63107226446}, {"x": 2029.2245037645448, "y": 282817.87281646597}, {"x": 2029.3066392881587, "y": 289310.2758579998}, {"x": 2029.3887748117727, "y": 295924.60627104156}, {"x": 2029.4709103353866, "y": 302662.6488003813}, {"x": 2029.5530458590006, "y": 309526.2069823985}, {"x": 2029.6351813826147, "y": 316517.1032663303}, {"x": 2029.7173169062287, "y": 323637.1791358315}, {"x": 2029.7994524298426, "y": 330888.29523082677}, {"x": 2029.8815879534566, "y": 338272.3314696545}, {"x": 2029.9637234770705, "y": 345791.1871715008}, {"x": 2030.0458590006845, "y": 353446.78117912426}, {"x": 2030.1279945242984, "y": 361241.05198187113}, {"x": 2030.2101300479123, "y": 369175.95783897914}, {"x": 2030.2922655715263, "y": 377253.47690317145}, {"x": 2030.3744010951402, "y": 385475.6073445382}, {"x": 2030.4565366187542, "y": 393844.3674747069}, {"x": 2030.5386721423683, "y": 402361.7958713001}, {"x": 2030.6208076659823, "y": 411029.95150268124}, {"x": 2030.7029431895962, "y": 419850.91385298583}];
-        const initialTotalMw = 32617.481424027133;
+        const powerData = [{"x": 2025.7857631759068, "y": 90633.0}, {"x": 2025.8678986995208, "y": 93144.61555502338}, {"x": 2025.950034223135, "y": 95713.12318020397}, {"x": 2026.0321697467489, "y": 98339.52649109844}, {"x": 2026.1143052703628, "y": 101024.84182764354}, {"x": 2026.1964407939768, "y": 103770.09835295333}, {"x": 2026.2785763175907, "y": 106576.33815240295}, {"x": 2026.3607118412046, "y": 109444.61633299799}, {"x": 2026.4428473648186, "y": 112376.0011230291}, {"x": 2026.5249828884325, "y": 115371.57397201116}, {"x": 2026.6071184120465, "y": 118432.42965090669}, {"x": 2026.6892539356604, "y": 121559.67635263262}, {"x": 2026.7713894592744, "y": 124754.43579285033}, {"x": 2026.8535249828885, "y": 128017.84331103798}, {"x": 2026.9356605065025, "y": 131351.047971845}, {"x": 2027.0177960301164, "y": 134755.21266672775}, {"x": 2027.0999315537304, "y": 138231.51421586654}, {"x": 2027.1820670773443, "y": 141781.14347036267}, {"x": 2027.2642026009582, "y": 145405.3054147157}, {"x": 2027.3463381245722, "y": 149105.2192695797}, {"x": 2027.4284736481861, "y": 152882.11859479896}, {"x": 2027.5106091718, "y": 156737.25139272164}, {"x": 2027.592744695414, "y": 160671.8802117914}, {"x": 2027.674880219028, "y": 164687.2822504167}, {"x": 2027.7570157426421, "y": 168784.74946111644}, {"x": 2027.839151266256, "y": 172965.5886549428}, {"x": 2027.92128678987, "y": 177231.1216061793}, {"x": 2028.003422313484, "y": 181582.68515731458}, {"x": 2028.085557837098, "y": 186021.63132429117}, {"x": 2028.1676933607118, "y": 190549.32740202878}, {"x": 2028.2498288843258, "y": 195167.15607022148}, {"x": 2028.3319644079397, "y": 199876.51549940844}, {"x": 2028.4140999315537, "y": 204678.8194573178}, {"x": 2028.4962354551676, "y": 209575.49741548297}, {"x": 2028.5783709787815, "y": 214567.99465613152}, {"x": 2028.6605065023957, "y": 219657.77237934497}, {"x": 2028.7426420260097, "y": 224846.30781049063}, {"x": 2028.8247775496236, "y": 230135.0943079237}, {"x": 2028.9069130732375, "y": 235525.6414709596}, {"x": 2028.9890485968515, "y": 241019.47524811677}, {"x": 2029.0711841204654, "y": 246618.138045628}, {"x": 2029.1533196440794, "y": 252323.1888362215}, {"x": 2029.2354551676933, "y": 258136.2032681701}, {"x": 2029.3175906913073, "y": 264058.7737746086}, {"x": 2029.3997262149212, "y": 270092.5096831187}, {"x": 2029.4818617385351, "y": 276239.0373255814}, {"x": 2029.5639972621493, "y": 282500.00014829583}, {"x": 2029.6461327857633, "y": 288877.05882236455}, {"x": 2029.7282683093772, "y": 295371.8913543451}, {"x": 2029.8104038329911, "y": 301986.19319716626}, {"x": 2029.892539356605, "y": 308721.6773613104}, {"x": 2029.974674880219, "y": 315580.0745262597}, {"x": 2030.056810403833, "y": 322563.13315220654}, {"x": 2030.138945927447, "y": 329672.6195920288}, {"x": 2030.2210814510609, "y": 336910.3182035268}, {"x": 2030.3032169746748, "y": 344278.03146192513}, {"x": 2030.3853524982887, "y": 351777.58007263555}, {"x": 2030.467488021903, "y": 359410.8030842828}, {"x": 2030.5496235455169, "y": 367179.55800199194}, {"x": 2030.6317590691308, "y": 375085.7209009375}, {"x": 2030.7138945927447, "y": 383131.1865401529}];
+        const initialTotalMw = 34192.11845829051;
         const startBlock = 499500;
-        const initialCurrentBlock = 918892;
+        const initialCurrentBlock = 919504;
 
         let currentShare = 3;
         let lastHeight = initialCurrentBlock;
@@ -582,7 +577,7 @@
                             type: 'linear',
                             ticks: { color: '#fff' },
                             grid: { color: 'rgba(255,255,255,0.1)' },
-                            title: { display: true, text: 'Prix BTC (EUR)', color: '#fff' },
+                            title: { display: true, text: 'Prix BTC (€)', color: '#fff' },
                             beginAtZero: true
                         }
                     },
@@ -609,9 +604,8 @@
         const BLOCKS_PER_DAY = 144;
         const DAYS_PER_YEAR = 365.25;
         const FEES_PER_BLOCK = 0.022;
-        let A_POWER_LAW = 6.138828446768177e-17;  // Calibré initialement
+        let A_POWER_LAW = 5.586129317551593e-17;  // Calibré initialement
         let ANNUAL_GROWTH_RATE = 1.5;  // 50% initial
-        let EXCHANGE_RATE = 0.85;
         let FRENCH_HASH_EH_S = BASE_FRENCH_HASH_EH_S * 1;  // Initial pour 1 GW
         
         let priceChart, revenueChart, cumulativeChart;
@@ -654,21 +648,17 @@
             document.getElementById('growthValue').textContent = this.value;
             updateSimulation();
         };
-        document.getElementById('exchangeSlider').oninput = function() {
-            document.getElementById('exchangeValue').textContent = this.value;
-            updateSimulation();
-        };
+
         
         function updateSimulation() {
             const gw = parseFloat(document.getElementById('gwSlider').value);
             const exponent = parseFloat(document.getElementById('exponentSlider').value);
             ANNUAL_GROWTH_RATE = 1 + (parseFloat(document.getElementById('growthSlider').value) / 100);
-            EXCHANGE_RATE = parseFloat(document.getElementById('exchangeSlider').value);
             FRENCH_HASH_EH_S = BASE_FRENCH_HASH_EH_S * gw;
             
             // Recalculer A si exposant change (calibré sur prix actuel ~123000 USD)
             const currentDays = getDaysFromGenesis(2025);
-            const currentPrice = 99237;
+            const currentPrice = 90633;
             A_POWER_LAW = currentPrice / Math.pow(currentDays, exponent);
             
             // Calcul des données
@@ -678,19 +668,19 @@
             
             years.forEach(year => {
                 const days = getDaysFromGenesis(year);
-                const priceUsd = getBTCPrice(days, exponent);
+                const priceEur = getBTCPrice(days, exponent);
                 const hashYear = CURRENT_HASH_EH_S * Math.pow(ANNUAL_GROWTH_RATE, year - 2026);
                 const hashPct = (FRENCH_HASH_EH_S / hashYear) * 100;
                 const avgReward = getAverageReward(year);
                 const totalBTCEmittedYear = avgReward * BLOCKS_PER_DAY * DAYS_PER_YEAR;
                 const btcMined = (hashPct / 100) * totalBTCEmittedYear;
-                const revenueUsd = btcMined * priceUsd;
-                const revenueEur = revenueUsd * EXCHANGE_RATE;
+                const revenueEur = btcMined * priceEur;
+                
                 cumulativeRevenueEur += revenueEur;
                 
                 simulationData.push({
                     year: year,
-                    priceUsd: priceUsd,
+                    priceEur: priceEur,
                     hashPct: hashPct,
                     btcMined: btcMined,
                     revenueEur: revenueEur,
@@ -704,11 +694,11 @@
                     <thead>
                         <tr>
                             <th>Année</th>
-                            <th>Prix BTC (USD)</th>
+                            <th>Prix BTC (€)</th>
                             <th>% Hash FR</th>
                             <th>BTC Minés</th>
-                            <th>Revenus Annuels (M EUR)</th>
-                            <th>Revenus Cumulés (M EUR)</th>
+                            <th>Revenus Annuels (M €)</th>
+                            <th>Revenus Cumulés (M €)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -717,7 +707,7 @@
                 tableHTML += `
                     <tr>
                         <td>${row.year}</td>
-                        <td>${Math.round(row.priceUsd).toLocaleString()}</td>
+                        <td>${Math.round(row.priceEur).toLocaleString()}</td>
                         <td>${row.hashPct.toFixed(3)} %</td>
                         <td>${Math.round(row.btcMined).toLocaleString()}</td>
                         <td>${Math.round(row.revenueEur).toLocaleString()}</td>
@@ -732,7 +722,7 @@
                             <td>Total</td>
                             <td colspan="2"></td>
                             <td>${Math.round(simulationData.reduce((sum, r) => sum + r.btcMined, 0)).toLocaleString()} BTC</td>
-                            <td colspan="2">${Math.round(simulationData[simulationData.length - 1].cumulativeEur).toLocaleString()} M EUR</td>
+                            <td colspan="2">${Math.round(simulationData[simulationData.length - 1].cumulativeEur).toLocaleString()} M €</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -744,15 +734,15 @@
             if (revenueChart) revenueChart.destroy();
             if (cumulativeChart) cumulativeChart.destroy();
             
-            // Graphique 1: Prix BTC (USD)
+            // Graphique 1: Prix BTC (€)
             const priceCtx = document.getElementById('priceChart').getContext('2d');
             priceChart = new Chart(priceCtx, {
                 type: 'line',
                 data: {
                     labels: years.map(y => y.toString()),
                     datasets: [{
-                        label: 'Prix BTC (USD)',
-                        data: simulationData.map(d => d.priceUsd),
+                        label: 'Prix BTC (€)',
+                        data: simulationData.map(d => d.priceEur),
                         borderColor: '#3b82f6',
                         backgroundColor: 'rgba(59, 130, 246, 0.1)',
                         fill: true,
@@ -769,14 +759,14 @@
                 }
             });
             
-            // Graphique 2: Revenus Annuels (M EUR)
+            // Graphique 2: Revenus Annuels (M €)
             const revenueCtx = document.getElementById('revenueChart').getContext('2d');
             revenueChart = new Chart(revenueCtx, {
                 type: 'bar',
                 data: {
                     labels: years.map(y => y.toString()),
                     datasets: [{
-                        label: 'Revenus (M EUR)',
+                        label: 'Revenus (M €)',
                         data: simulationData.map(d => d.revenueEur),
                         backgroundColor: ['#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4']
                     }]
@@ -784,21 +774,21 @@
                 options: {
                     responsive: true,
                     scales: {
-                        y: { beginAtZero: true, title: { display: true, text: 'Revenus (M EUR)' } },
+                        y: { beginAtZero: true, title: { display: true, text: 'Revenus (M €)' } },
                         x: { title: { display: true, text: 'Année' } }
                     },
                     plugins: { title: { display: true, text: 'Revenus Annuels Projetés' } }
                 }
             });
             
-            // Graphique 3: Revenus Cumulés (M EUR)
+            // Graphique 3: Revenus Cumulés (M €)
             const cumulativeCtx = document.getElementById('cumulativeChart').getContext('2d');
             cumulativeChart = new Chart(cumulativeCtx, {
                 type: 'line',
                 data: {
                     labels: years.map(y => y.toString()),
                     datasets: [{
-                        label: 'Revenus Cumulés (M EUR)',
+                        label: 'Revenus Cumulés (M €)',
                         data: simulationData.map(d => d.cumulativeEur),
                         borderColor: '#10b981',
                         backgroundColor: 'rgba(16, 185, 129, 0.2)',
@@ -809,7 +799,7 @@
                 options: {
                     responsive: true,
                     scales: {
-                        y: { beginAtZero: true, title: { display: true, text: 'Revenus Cumulés (M EUR)' } },
+                        y: { beginAtZero: true, title: { display: true, text: 'Revenus Cumulés (M €)' } },
                         x: { title: { display: true, text: 'Année' } }
                     },
                     plugins: { title: { display: true, text: 'Projection des Revenus Cumulés' } }

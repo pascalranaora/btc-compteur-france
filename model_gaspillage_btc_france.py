@@ -493,21 +493,16 @@ def generate_html():
                         <span id="growthValue">30</span>
                     </div>
                     
-                    <div class="slider-container">
-                        <label>Taux USD/EUR : <span class="tooltip"><span class="tooltiptext">Taux de change pour convertir projections USD en EUR (actuel ~0.85).</span></span></label>
-                        <input type="range" id="exchangeSlider" min="0.5" max="1.5" step="0.01" value="0.85">
-                        <span id="exchangeValue">0.85</span>
-                    </div>
                     
                     <div id="results-table"></div>
                     
                     <h2>Évolution Projetée du Prix du Bitcoin (USD)</h2>
                     <canvas id="priceChart" width="800" height="400"></canvas>
                     
-                    <h2>Revenus Annuels Projetés (M EUR)</h2>
+                    <h2>Revenus Annuels Projetés (M €)</h2>
                     <canvas id="revenueChart" width="800" height="400"></canvas>
                     
-                    <h2>Revenus Cumulés Projetés (M EUR)</h2>
+                    <h2>Revenus Cumulés Projetés (M €)</h2>
                     <canvas id="cumulativeChart" width="800" height="400"></canvas>
                 </div>            
         </div>
@@ -728,7 +723,7 @@ def generate_html():
                             type: 'linear',
                             ticks: {{ color: '#fff' }},
                             grid: {{ color: 'rgba(255,255,255,0.1)' }},
-                            title: {{ display: true, text: 'Prix BTC (EUR)', color: '#fff' }},
+                            title: {{ display: true, text: 'Prix BTC (€)', color: '#fff' }},
                             beginAtZero: true
                         }}
                     }},
@@ -757,7 +752,6 @@ def generate_html():
         const FEES_PER_BLOCK = 0.022;
         let A_POWER_LAW = {result['A']};  // Calibré initialement
         let ANNUAL_GROWTH_RATE = 1.5;  // 50% initial
-        let EXCHANGE_RATE = 0.85;
         let FRENCH_HASH_EH_S = BASE_FRENCH_HASH_EH_S * 1;  // Initial pour 1 GW
         
         let priceChart, revenueChart, cumulativeChart;
@@ -800,16 +794,12 @@ def generate_html():
             document.getElementById('growthValue').textContent = this.value;
             updateSimulation();
         }};
-        document.getElementById('exchangeSlider').oninput = function() {{
-            document.getElementById('exchangeValue').textContent = this.value;
-            updateSimulation();
-        }};
+
         
         function updateSimulation() {{
             const gw = parseFloat(document.getElementById('gwSlider').value);
             const exponent = parseFloat(document.getElementById('exponentSlider').value);
             ANNUAL_GROWTH_RATE = 1 + (parseFloat(document.getElementById('growthSlider').value) / 100);
-            EXCHANGE_RATE = parseFloat(document.getElementById('exchangeSlider').value);
             FRENCH_HASH_EH_S = BASE_FRENCH_HASH_EH_S * gw;
             
             // Recalculer A si exposant change (calibré sur prix actuel ~123000 USD)
@@ -824,19 +814,19 @@ def generate_html():
             
             years.forEach(year => {{
                 const days = getDaysFromGenesis(year);
-                const priceUsd = getBTCPrice(days, exponent);
+                const priceEur = getBTCPrice(days, exponent);
                 const hashYear = CURRENT_HASH_EH_S * Math.pow(ANNUAL_GROWTH_RATE, year - 2026);
                 const hashPct = (FRENCH_HASH_EH_S / hashYear) * 100;
                 const avgReward = getAverageReward(year);
                 const totalBTCEmittedYear = avgReward * BLOCKS_PER_DAY * DAYS_PER_YEAR;
                 const btcMined = (hashPct / 100) * totalBTCEmittedYear;
-                const revenueUsd = btcMined * priceUsd;
-                const revenueEur = revenueUsd * EXCHANGE_RATE;
+                const revenueEur = btcMined * priceEur;
+                
                 cumulativeRevenueEur += revenueEur;
                 
                 simulationData.push({{
                     year: year,
-                    priceUsd: priceUsd,
+                    priceEur: priceEur,
                     hashPct: hashPct,
                     btcMined: btcMined,
                     revenueEur: revenueEur,
@@ -850,11 +840,11 @@ def generate_html():
                     <thead>
                         <tr>
                             <th>Année</th>
-                            <th>Prix BTC (USD)</th>
+                            <th>Prix BTC (€)</th>
                             <th>% Hash FR</th>
                             <th>BTC Minés</th>
-                            <th>Revenus Annuels (M EUR)</th>
-                            <th>Revenus Cumulés (M EUR)</th>
+                            <th>Revenus Annuels (M €)</th>
+                            <th>Revenus Cumulés (M €)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -863,7 +853,7 @@ def generate_html():
                 tableHTML += `
                     <tr>
                         <td>${{row.year}}</td>
-                        <td>${{Math.round(row.priceUsd).toLocaleString()}}</td>
+                        <td>${{Math.round(row.priceEur).toLocaleString()}}</td>
                         <td>${{row.hashPct.toFixed(3)}} %</td>
                         <td>${{Math.round(row.btcMined).toLocaleString()}}</td>
                         <td>${{Math.round(row.revenueEur).toLocaleString()}}</td>
@@ -878,7 +868,7 @@ def generate_html():
                             <td>Total</td>
                             <td colspan="2"></td>
                             <td>${{Math.round(simulationData.reduce((sum, r) => sum + r.btcMined, 0)).toLocaleString()}} BTC</td>
-                            <td colspan="2">${{Math.round(simulationData[simulationData.length - 1].cumulativeEur).toLocaleString()}} M EUR</td>
+                            <td colspan="2">${{Math.round(simulationData[simulationData.length - 1].cumulativeEur).toLocaleString()}} M €</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -890,15 +880,15 @@ def generate_html():
             if (revenueChart) revenueChart.destroy();
             if (cumulativeChart) cumulativeChart.destroy();
             
-            // Graphique 1: Prix BTC (USD)
+            // Graphique 1: Prix BTC (€)
             const priceCtx = document.getElementById('priceChart').getContext('2d');
             priceChart = new Chart(priceCtx, {{
                 type: 'line',
                 data: {{
                     labels: years.map(y => y.toString()),
                     datasets: [{{
-                        label: 'Prix BTC (USD)',
-                        data: simulationData.map(d => d.priceUsd),
+                        label: 'Prix BTC (€)',
+                        data: simulationData.map(d => d.priceEur),
                         borderColor: '#3b82f6',
                         backgroundColor: 'rgba(59, 130, 246, 0.1)',
                         fill: true,
@@ -915,14 +905,14 @@ def generate_html():
                 }}
             }});
             
-            // Graphique 2: Revenus Annuels (M EUR)
+            // Graphique 2: Revenus Annuels (M €)
             const revenueCtx = document.getElementById('revenueChart').getContext('2d');
             revenueChart = new Chart(revenueCtx, {{
                 type: 'bar',
                 data: {{
                     labels: years.map(y => y.toString()),
                     datasets: [{{
-                        label: 'Revenus (M EUR)',
+                        label: 'Revenus (M €)',
                         data: simulationData.map(d => d.revenueEur),
                         backgroundColor: ['#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4']
                     }}]
@@ -930,21 +920,21 @@ def generate_html():
                 options: {{
                     responsive: true,
                     scales: {{
-                        y: {{ beginAtZero: true, title: {{ display: true, text: 'Revenus (M EUR)' }} }},
+                        y: {{ beginAtZero: true, title: {{ display: true, text: 'Revenus (M €)' }} }},
                         x: {{ title: {{ display: true, text: 'Année' }} }}
                     }},
                     plugins: {{ title: {{ display: true, text: 'Revenus Annuels Projetés' }} }}
                 }}
             }});
             
-            // Graphique 3: Revenus Cumulés (M EUR)
+            // Graphique 3: Revenus Cumulés (M €)
             const cumulativeCtx = document.getElementById('cumulativeChart').getContext('2d');
             cumulativeChart = new Chart(cumulativeCtx, {{
                 type: 'line',
                 data: {{
                     labels: years.map(y => y.toString()),
                     datasets: [{{
-                        label: 'Revenus Cumulés (M EUR)',
+                        label: 'Revenus Cumulés (M €)',
                         data: simulationData.map(d => d.cumulativeEur),
                         borderColor: '#10b981',
                         backgroundColor: 'rgba(16, 185, 129, 0.2)',
@@ -955,7 +945,7 @@ def generate_html():
                 options: {{
                     responsive: true,
                     scales: {{
-                        y: {{ beginAtZero: true, title: {{ display: true, text: 'Revenus Cumulés (M EUR)' }} }},
+                        y: {{ beginAtZero: true, title: {{ display: true, text: 'Revenus Cumulés (M €)' }} }},
                         x: {{ title: {{ display: true, text: 'Année' }} }}
                     }},
                     plugins: {{ title: {{ display: true, text: 'Projection des Revenus Cumulés' }} }}
