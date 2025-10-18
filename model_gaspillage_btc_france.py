@@ -98,7 +98,7 @@ def calculate_mined_btc(start_block, current_block):
     
     return total_btc
 
-def calculate_opportunity_cost(share=0.03):  # 3% de part hypothétique
+def calculate_opportunity_cost(share=0.10):  # 10% de part hypothétique
     """Calcule le coût d'opportunité, plus données pour graphique."""
     start_block = 499500  # Hauteur approximative au 1er janvier 2018
     current_block = get_current_block_height()
@@ -416,16 +416,16 @@ def generate_html():
             <select id="shareSelect" class="share-select">
                 <option value="1">1%</option>
                 <option value="2">2%</option>
-                <option value="3" selected>3%</option>
+                <option value="3">3%</option>
                 <option value="5">5%</option>
-                <option value="10">10%</option>
+                <option value="10" selected>10%</option>
                 <option value="15">15%</option>
             </select>
             
-            <div class="label">MW/Jour Nécessaires <span class="tooltip"><span class="tooltip-icon">?</span><span class="tooltiptext">Pour miner, il faut de l'électricité. Ici, il s'agirait, par exemple, de surplus nucléaire et énergies intermittentes bas-carbone disponible chaque jour en France pour optimiser & limiter les gaspillages sur le réseau électrique France (optimisation sous contraintes).</span></span></div>
+            <div class="label">MW/Jour Nécessaires <span class="tooltip"><span class="tooltip-icon">?</span><span class="tooltiptext">Pour miner, il faut de l'électricité. Ici, il s'agirait, par exemple, de surplus nucléaire et énergies intermittentes bas-carbone disponible chaque jour en France pour optimiser & limiter les gaspillages sur le réseau électrique France (optimisation sous contraintes). Par exemple <a target="_blank" href="https://x.com/i/grok/share/lgsH4qga1fdvgcIIYeSoolj2Z">il est estimé que plus de 3.6 GW sont disponibles chaque jour et non utilisés en raison de la modulation sur le parc nucléaire français.</a></span></span></div>
             <div class="counter" id="mwhCounter">0</div>
 
-            <div class="label">Total Manqués (€) <span class="tooltip"><span class="tooltip-icon">?</span><span class="tooltiptext">Valeur actuelle des BTC manqués (coût d'opportunité total en milliards €). Pour 3% par exemple, >10 milliards € aujourd'hui. Formule (BTC minés × prix actuel), sans déduire coûts (élec ~3 Md€ sur période).</span></span></div>
+            <div class="label">Total Manqués (€) <span class="tooltip"><span class="tooltip-icon">?</span><span class="tooltiptext">Valeur actuelle des BTC manqués (coût d'opportunité total en milliards €). Pour 10% par exemple, ~>= 30 milliards € brut aujourd'hui. Formule (BTC minés × prix actuel).</span></span></div>
             <div class="counter" id="totalEurosCounter">0</div>
             
             <div class="label">BTC Manqués <span class="tooltip"><span class="tooltip-icon">?</span><span class="tooltiptext">Les BTC "manqués" sont les récompenses que la France aurait gagnées en minant. "Miner" n'est pas creuser de l'or, mais un processus informatique : des ordinateurs résolvant des énigmes pour ajouter des blocs à la blockchain et sécuriser les transactions. Le premier mineur qui résout le puzzle gagne ~3.125 BTC/bloc dans le cycle actuel. Les "pools" de minage permettent de distribuer les récompenses aux différents mineurs en fonction de leur part de hachage du réseau.</span></span></div>
@@ -456,7 +456,7 @@ def generate_html():
                     <li>Pour maximiser l'utilité du minage de Bitcoin dans la société : une fois une certaine stabilité des dépenses et de la société atteinte, les profits du minage pourraient servir au bien-être des populations, au développement des énergies renouvelables, à l'agroécologie et encore en projetant à plus long-terme : à aider la transition bas-carbone des pays du Sud par exemple.</li>
                     <li><a href="https://x.com/i/grok/share/vxt7T2ufIWKKPaWyWEj0I5Mtl" target="_blank">Le Bitcoin peut devenir un grand allié pour accélérer la transition énergétique</a>. Mais il faut interdire l’utilisation de combustible fossile dans le minage Bitcoin sous peine de lourdes sanctions et réguler le minage pour que l'usage n'empiète pas sur la consommation d'électricité courante (optimisation sous contraintes).</li>
                     <li><a href="https://b1m.io/" target="_blank">Bitcoin suit une loi de puissance</a> et le rendement futur pourrait être projeté avec un écart type d'erreur.</li>                    
-                    <li>📚 En apprendre plus sur Bitcoin avec <b><a href="https://www.livre-bitcoin.fr" target="_blank" style="color: orange;">un livre en ligne scientifique qui lui est dédié</a></b> (vue la densité du sujet, il faut peut-être y consacrer un effort espacé dans le temps). 📚</li>
+                    <li>📚 En apprendre plus sur Bitcoin avec <b><a href="https://www.livre-bitcoin.fr" target="_blank" style="color: orange;">un 'livre numérique' (format original contenant textes, illustrations et vidéos) est accessible gratuitement en ligne et lui est dédié</a></b> (vue la densité du sujet, il faut peut-être y consacrer un effort espacé dans le temps). 📚</li>
                 </ul>
                 <br />
                 <button type="button" class="collapsible"><h4>Cliquez ici pour plus d'explications techniques sur le script.</h4></button>
@@ -600,7 +600,7 @@ def generate_html():
         const startBlock = {result['start_block']};
         const initialCurrentBlock = {result['initial_current_block']};
 
-        let currentShare = 3;
+        let currentShare = 10;
         let lastHeight = initialCurrentBlock;
         let lastPrice = initialPrice;
         let lastTotalMw = initialTotalMw;
@@ -666,8 +666,8 @@ def generate_html():
 
         // Initialisation
         window.onload = () => {{
-            // Animation initiale avec share=3
-            const initialShare = 0.03;
+            // Animation initiale avec share=10%
+            const initialShare = 0.10;
             const initialMw = initialTotalMw * initialShare;
             
             document.getElementById('totalEurosCounter').textContent = '0';

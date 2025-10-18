@@ -270,16 +270,16 @@
             <select id="shareSelect" class="share-select">
                 <option value="1">1%</option>
                 <option value="2">2%</option>
-                <option value="3" selected>3%</option>
+                <option value="3">3%</option>
                 <option value="5">5%</option>
-                <option value="10">10%</option>
+                <option value="10" selected>10%</option>
                 <option value="15">15%</option>
             </select>
             
-            <div class="label">MW/Jour Nécessaires <span class="tooltip"><span class="tooltip-icon">?</span><span class="tooltiptext">Pour miner, il faut de l'électricité. Ici, il s'agirait, par exemple, de surplus nucléaire et énergies intermittentes bas-carbone disponible chaque jour en France pour optimiser & limiter les gaspillages sur le réseau électrique France (optimisation sous contraintes).</span></span></div>
+            <div class="label">MW/Jour Nécessaires <span class="tooltip"><span class="tooltip-icon">?</span><span class="tooltiptext">Pour miner, il faut de l'électricité. Ici, il s'agirait, par exemple, de surplus nucléaire et énergies intermittentes bas-carbone disponible chaque jour en France pour optimiser & limiter les gaspillages sur le réseau électrique France (optimisation sous contraintes). Par exemple <a target="_blank" href="https://x.com/i/grok/share/lgsH4qga1fdvgcIIYeSoolj2Z">il est estimé que plus de 3.6 GW sont disponibles chaque jour et non utilisés en raison de la modulation sur le parc nucléaire français.</a></span></span></div>
             <div class="counter" id="mwhCounter">0</div>
 
-            <div class="label">Total Manqués (€) <span class="tooltip"><span class="tooltip-icon">?</span><span class="tooltiptext">Valeur actuelle des BTC manqués (coût d'opportunité total en milliards €). Pour 3% par exemple, >10 milliards € aujourd'hui. Formule (BTC minés × prix actuel), sans déduire coûts (élec ~3 Md€ sur période).</span></span></div>
+            <div class="label">Total Manqués (€) <span class="tooltip"><span class="tooltip-icon">?</span><span class="tooltiptext">Valeur actuelle des BTC manqués (coût d'opportunité total en milliards €). Pour 10% par exemple, ~>= 30 milliards € brut aujourd'hui. Formule (BTC minés × prix actuel).</span></span></div>
             <div class="counter" id="totalEurosCounter">0</div>
             
             <div class="label">BTC Manqués <span class="tooltip"><span class="tooltip-icon">?</span><span class="tooltiptext">Les BTC "manqués" sont les récompenses que la France aurait gagnées en minant. "Miner" n'est pas creuser de l'or, mais un processus informatique : des ordinateurs résolvant des énigmes pour ajouter des blocs à la blockchain et sécuriser les transactions. Le premier mineur qui résout le puzzle gagne ~3.125 BTC/bloc dans le cycle actuel. Les "pools" de minage permettent de distribuer les récompenses aux différents mineurs en fonction de leur part de hachage du réseau.</span></span></div>
@@ -310,7 +310,7 @@
                     <li>Pour maximiser l'utilité du minage de Bitcoin dans la société : une fois une certaine stabilité des dépenses et de la société atteinte, les profits du minage pourraient servir au bien-être des populations, au développement des énergies renouvelables, à l'agroécologie et encore en projetant à plus long-terme : à aider la transition bas-carbone des pays du Sud par exemple.</li>
                     <li><a href="https://x.com/i/grok/share/vxt7T2ufIWKKPaWyWEj0I5Mtl" target="_blank">Le Bitcoin peut devenir un grand allié pour accélérer la transition énergétique</a>. Mais il faut interdire l’utilisation de combustible fossile dans le minage Bitcoin sous peine de lourdes sanctions et réguler le minage pour que l'usage n'empiète pas sur la consommation d'électricité courante (optimisation sous contraintes).</li>
                     <li><a href="https://b1m.io/" target="_blank">Bitcoin suit une loi de puissance</a> et le rendement futur pourrait être projeté avec un écart type d'erreur.</li>                    
-                    <li>📚 En apprendre plus sur Bitcoin avec <b><a href="https://www.livre-bitcoin.fr" target="_blank" style="color: orange;">un livre en ligne scientifique qui lui est dédié</a></b> (vue la densité du sujet, il faut peut-être y consacrer un effort espacé dans le temps). 📚</li>
+                    <li>📚 En apprendre plus sur Bitcoin avec <b><a href="https://www.livre-bitcoin.fr" target="_blank" style="color: orange;">un 'livre numérique' (format original contenant textes, illustrations et vidéos) est accessible gratuitement en ligne et lui est dédié</a></b> (vue la densité du sujet, il faut peut-être y consacrer un effort espacé dans le temps). 📚</li>
                 </ul>
                 <br />
                 <button type="button" class="collapsible"><h4>Cliquez ici pour plus d'explications techniques sur le script.</h4></button>
@@ -444,17 +444,17 @@
         }
 
         // Données embeddées initiales
-        const initialTotalEuros = 8679559878;
-        const initialBtc = 95766.0;
-        const initialPrice = 90633;
-        const initialBlocks = 420004;
+        const initialTotalEuros = 29281643422;
+        const initialBtc = 319271.25;
+        const initialPrice = 91714;
+        const initialBlocks = 420168;
         const histData = [{"x": 2018.0, "y": 10000}, {"x": 2025.0, "y": 97000}];
-        const powerData = [{"x": 2025.7857631759068, "y": 90633.0}, {"x": 2025.8678986995208, "y": 93144.61555502338}, {"x": 2025.950034223135, "y": 95713.12318020397}, {"x": 2026.0321697467489, "y": 98339.52649109844}, {"x": 2026.1143052703628, "y": 101024.84182764354}, {"x": 2026.1964407939768, "y": 103770.09835295333}, {"x": 2026.2785763175907, "y": 106576.33815240295}, {"x": 2026.3607118412046, "y": 109444.61633299799}, {"x": 2026.4428473648186, "y": 112376.0011230291}, {"x": 2026.5249828884325, "y": 115371.57397201116}, {"x": 2026.6071184120465, "y": 118432.42965090669}, {"x": 2026.6892539356604, "y": 121559.67635263262}, {"x": 2026.7713894592744, "y": 124754.43579285033}, {"x": 2026.8535249828885, "y": 128017.84331103798}, {"x": 2026.9356605065025, "y": 131351.047971845}, {"x": 2027.0177960301164, "y": 134755.21266672775}, {"x": 2027.0999315537304, "y": 138231.51421586654}, {"x": 2027.1820670773443, "y": 141781.14347036267}, {"x": 2027.2642026009582, "y": 145405.3054147157}, {"x": 2027.3463381245722, "y": 149105.2192695797}, {"x": 2027.4284736481861, "y": 152882.11859479896}, {"x": 2027.5106091718, "y": 156737.25139272164}, {"x": 2027.592744695414, "y": 160671.8802117914}, {"x": 2027.674880219028, "y": 164687.2822504167}, {"x": 2027.7570157426421, "y": 168784.74946111644}, {"x": 2027.839151266256, "y": 172965.5886549428}, {"x": 2027.92128678987, "y": 177231.1216061793}, {"x": 2028.003422313484, "y": 181582.68515731458}, {"x": 2028.085557837098, "y": 186021.63132429117}, {"x": 2028.1676933607118, "y": 190549.32740202878}, {"x": 2028.2498288843258, "y": 195167.15607022148}, {"x": 2028.3319644079397, "y": 199876.51549940844}, {"x": 2028.4140999315537, "y": 204678.8194573178}, {"x": 2028.4962354551676, "y": 209575.49741548297}, {"x": 2028.5783709787815, "y": 214567.99465613152}, {"x": 2028.6605065023957, "y": 219657.77237934497}, {"x": 2028.7426420260097, "y": 224846.30781049063}, {"x": 2028.8247775496236, "y": 230135.0943079237}, {"x": 2028.9069130732375, "y": 235525.6414709596}, {"x": 2028.9890485968515, "y": 241019.47524811677}, {"x": 2029.0711841204654, "y": 246618.138045628}, {"x": 2029.1533196440794, "y": 252323.1888362215}, {"x": 2029.2354551676933, "y": 258136.2032681701}, {"x": 2029.3175906913073, "y": 264058.7737746086}, {"x": 2029.3997262149212, "y": 270092.5096831187}, {"x": 2029.4818617385351, "y": 276239.0373255814}, {"x": 2029.5639972621493, "y": 282500.00014829583}, {"x": 2029.6461327857633, "y": 288877.05882236455}, {"x": 2029.7282683093772, "y": 295371.8913543451}, {"x": 2029.8104038329911, "y": 301986.19319716626}, {"x": 2029.892539356605, "y": 308721.6773613104}, {"x": 2029.974674880219, "y": 315580.0745262597}, {"x": 2030.056810403833, "y": 322563.13315220654}, {"x": 2030.138945927447, "y": 329672.6195920288}, {"x": 2030.2210814510609, "y": 336910.3182035268}, {"x": 2030.3032169746748, "y": 344278.03146192513}, {"x": 2030.3853524982887, "y": 351777.58007263555}, {"x": 2030.467488021903, "y": 359410.8030842828}, {"x": 2030.5496235455169, "y": 367179.55800199194}, {"x": 2030.6317590691308, "y": 375085.7209009375}, {"x": 2030.7138945927447, "y": 383131.1865401529}];
+        const powerData = [{"x": 2025.7885010266941, "y": 91714.0}, {"x": 2025.870636550308, "y": 94255.15301082678}, {"x": 2025.952772073922, "y": 96853.85771576372}, {"x": 2026.034907597536, "y": 99511.12920079303}, {"x": 2026.11704312115, "y": 102227.99541961365}, {"x": 2026.1991786447638, "y": 105005.49729353531}, {"x": 2026.2813141683778, "y": 107844.68881166223}, {"x": 2026.3634496919917, "y": 110746.6371313654}, {"x": 2026.4455852156057, "y": 113712.42267904346}, {"x": 2026.5277207392196, "y": 116743.13925117107}, {"x": 2026.6098562628338, "y": 119839.89411563467}, {"x": 2026.6919917864477, "y": 123003.8081133548}, {"x": 2026.7741273100617, "y": 126236.01576019455}, {"x": 2026.8562628336756, "y": 129537.66534915371}, {"x": 2026.9383983572895, "y": 132909.91905284786}, {"x": 2027.0205338809035, "y": 136353.95302627204}, {"x": 2027.1026694045174, "y": 139870.95750984843}, {"x": 2027.1848049281314, "y": 143462.1369327575}, {"x": 2027.2669404517453, "y": 147128.71001655224}, {"x": 2027.3490759753593, "y": 150871.90987905458}, {"x": 2027.4312114989732, "y": 154692.98413853414}, {"x": 2027.5133470225874, "y": 158593.19501816804}, {"x": 2027.5954825462013, "y": 162573.8194507819}, {"x": 2027.6776180698153, "y": 166636.14918387122}, {"x": 2027.7597535934292, "y": 170781.49088490248}, {"x": 2027.8418891170431, "y": 175011.1662468941}, {"x": 2027.924024640657, "y": 179326.5120942759}, {"x": 2028.006160164271, "y": 183728.88048902742}, {"x": 2028.088295687885, "y": 188219.63883709372}, {"x": 2028.170431211499, "y": 192800.1699950793}, {"x": 2028.2525667351129, "y": 197471.87237721847}, {"x": 2028.3347022587268, "y": 202236.1600626225}, {"x": 2028.416837782341, "y": 207094.46290280286}, {"x": 2028.498973305955, "y": 212048.2266294698}, {"x": 2028.5811088295688, "y": 217098.91296260658}, {"x": 2028.6632443531828, "y": 222247.99971881756}, {"x": 2028.7453798767967, "y": 227496.9809199512}, {"x": 2028.8275154004107, "y": 232847.3669019963}, {"x": 2028.9096509240246, "y": 238300.684424252}, {"x": 2028.9917864476386, "y": 243858.47677876978}, {"x": 2029.0739219712525, "y": 249522.30390006892}, {"x": 2029.1560574948664, "y": 255293.74247512282}, {"x": 2029.2381930184804, "y": 261174.38605361743}, {"x": 2029.3203285420946, "y": 267165.84515848046}, {"x": 2029.4024640657085, "y": 273269.7473966814}, {"x": 2029.4845995893224, "y": 279487.73757030093}, {"x": 2029.5667351129364, "y": 285821.4777878714}, {"x": 2029.6488706365503, "y": 292272.64757598494}, {"x": 2029.7310061601643, "y": 298842.94399117195}, {"x": 2029.8131416837782, "y": 305534.0817320466}, {"x": 2029.8952772073922, "y": 312347.79325172136}, {"x": 2029.977412731006, "y": 319285.8288704886}, {"x": 2030.05954825462, "y": 326349.95688876935}, {"x": 2030.141683778234, "y": 333541.96370032866}, {"x": 2030.2238193018482, "y": 340863.65390575776}, {"x": 2030.305954825462, "y": 348316.8504262213}, {"x": 2030.388090349076, "y": 355903.39461747085}, {"x": 2030.47022587269, "y": 363625.14638412267}, {"x": 2030.552361396304, "y": 371483.9842942008}, {"x": 2030.6344969199179, "y": 379481.80569394404}, {"x": 2030.7166324435318, "y": 387620.52682287677}];
         const initialTotalMw = 34192.11845829051;
         const startBlock = 499500;
-        const initialCurrentBlock = 919504;
+        const initialCurrentBlock = 919668;
 
-        let currentShare = 3;
+        let currentShare = 10;
         let lastHeight = initialCurrentBlock;
         let lastPrice = initialPrice;
         let lastTotalMw = initialTotalMw;
@@ -520,8 +520,8 @@
 
         // Initialisation
         window.onload = () => {
-            // Animation initiale avec share=3
-            const initialShare = 0.03;
+            // Animation initiale avec share=10%
+            const initialShare = 0.10;
             const initialMw = initialTotalMw * initialShare;
             
             document.getElementById('totalEurosCounter').textContent = '0';
@@ -604,7 +604,7 @@
         const BLOCKS_PER_DAY = 144;
         const DAYS_PER_YEAR = 365.25;
         const FEES_PER_BLOCK = 0.022;
-        let A_POWER_LAW = 5.586129317551593e-17;  // Calibré initialement
+        let A_POWER_LAW = 5.647595928867648e-17;  // Calibré initialement
         let ANNUAL_GROWTH_RATE = 1.5;  // 50% initial
         let FRENCH_HASH_EH_S = BASE_FRENCH_HASH_EH_S * 1;  // Initial pour 1 GW
         
@@ -658,7 +658,7 @@
             
             // Recalculer A si exposant change (calibré sur prix actuel ~123000 USD)
             const currentDays = getDaysFromGenesis(2025);
-            const currentPrice = 90633;
+            const currentPrice = 91714;
             A_POWER_LAW = currentPrice / Math.pow(currentDays, exponent);
             
             // Calcul des données
