@@ -151,6 +151,7 @@ def generate_html():
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compteur Bitcoin France</title>
+    <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/daabdiwnt/image/upload/v1760992725/ArticleBTC/Galaxy_mqivqu.ico">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Arial:wght@400;700&display=swap');
