@@ -478,7 +478,7 @@ def generate_html():
                     
                     <div class="slider-container">
                         <label>Nombre de GW : <span class="tooltip"><span class="tooltiptext">Puissance allouée (ex. 1 GW = 1000 MW). Interruptible sur surplus EDF, avec récupération chaleur (chauffage urbain). Pour 1 GW, ~55 EH/s (5.5% global), investissement ~2-3 Md€ (hardware + infra), amorti <6 mois.</span></span></label>
-                        <input type="range" id="gwSlider" min="0.15" max="3" step="0.05" value="1">
+                        <input type="range" id="gwSlider" min="0.15" max="5" step="0.05" value="1">
                         <span id="gwValue">1</span>
                     </div>
                     
