@@ -176,10 +176,10 @@
             z-index: 1;
             top: 125%;
             left: 50%;
-            margin-left: -45px;
+            margin-left: -38px;
             margin-bottom: -45px;
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: opacity 0.001s;
             border: 1px solid #F7931A;
             font-size: 0.9em;
             line-height: 1.4;
@@ -188,9 +188,9 @@
             content: "";
             position: absolute;
             bottom: 100%;
-            right: 80%;
+            right: 85%;
             margin-left: -5px;
-            border-width: 5px;
+            border-width: 10px;
             border-style: solid;
             border-color: #F7931A transparent transparent transparent;
         }
@@ -202,7 +202,7 @@
         .tooltip .tooltip-icon {
             color: #0066cc;
             font-weight: bold;
-            font-size: 0.7em;
+            font-size: 1em;
             margin-left: 2px;
             vertical-align: super;
         }
@@ -221,7 +221,7 @@
         border-radius: 3px;
         }
 
-        /* Inpiut Track */
+        /* Input Track */
 
         /* Chrome, Safari, Edge (Chromium) */
         input[type="range"]::-webkit-slider-runnable-track {
@@ -311,7 +311,7 @@
                     <li>Pour maximiser l'utilité du minage de Bitcoin dans la société : une fois une certaine stabilité des dépenses et de la société atteinte, les profits du minage pourraient servir au bien-être des populations, au développement des énergies renouvelables, à l'agroécologie et encore en projetant à plus long-terme : à aider la transition bas-carbone des pays du Sud par exemple.</li>
                     <li><a href="https://x.com/i/grok/share/vxt7T2ufIWKKPaWyWEj0I5Mtl" target="_blank">Le Bitcoin peut devenir un grand allié pour accélérer la transition énergétique</a>. Mais il faut interdire l’utilisation de combustible fossile dans le minage Bitcoin sous peine de lourdes sanctions et réguler le minage pour que l'usage n'empiète pas sur la consommation d'électricité courante (optimisation sous contraintes).</li>
                     <li><a href="https://www.livre-bitcoin.fr/?page=45" target="_blank">Bitcoin suit une loi de puissance</a> et le rendement futur pourrait être projeté avec un écart type d'erreur.</li>                    
-                    <li>📚 En apprendre plus sur Bitcoin avec <b><a href="https://www.livre-bitcoin.fr" target="_blank" style="color: orange;">un 'livre numérique' (format original contenant textes, illustrations et vidéos) accessible gratuitement en ligne et qui lui est dédié</a></b> (vue la densité du sujet, il faut peut-être y consacrer un effort espacé dans le temps). 📚</li>
+                    <li>📚 En apprendre plus sur Bitcoin avec <b><a href="https://www.livre-bitcoin.fr" target="_blank" style="color: orange;">un 'livre numérique' (format original contenant textes, illustrations et vidéos) est accessible gratuitement en ligne et lui est dédié</a></b> (vue la densité du sujet, il faut peut-être y consacrer un effort espacé dans le temps). 📚</li>
                 </ul>
                 <br />
                 <button type="button" class="collapsible"><h4>Cliquez ici pour plus d'explications techniques sur le script.</h4></button>
@@ -445,12 +445,12 @@
         }
 
         // Données embeddées initiales
-        const initialTotalEuros = 30699281970;
+        const initialTotalEuros = 30686496995;
         const initialBtc = 319624.375;
-        const initialPrice = 96048;
+        const initialPrice = 96008;
         const initialBlocks = 421298;
         const histData = [{"x": 2018.0, "y": 10000}, {"x": 2025.0, "y": 97000}];
-        const powerData = [{"x": 2025.8104038329911, "y": 96047.99999999999}, {"x": 2025.892539356605, "y": 98705.73032475059}, {"x": 2025.974674880219, "y": 101423.57365120154}, {"x": 2026.056810403833, "y": 104202.58885781474}, {"x": 2026.138945927447, "y": 107043.84822847457}, {"x": 2026.2210814510609, "y": 109948.43755642176}, {"x": 2026.3032169746748, "y": 112917.45624848828}, {"x": 2026.3853524982887, "y": 115952.01742963196}, {"x": 2026.467488021903, "y": 119053.24804777117}, {"x": 2026.5496235455169, "y": 122222.2889789181}, {"x": 2026.6317590691308, "y": 125460.29513261076}, {"x": 2026.7138945927447, "y": 128768.43555764263}, {"x": 2026.7960301163587, "y": 132147.8935480898}, {"x": 2026.8781656399726, "y": 135599.86674963488}, {"x": 2026.9603011635866, "y": 139125.56726618693}, {"x": 2027.0424366872005, "y": 142726.22176679736}, {"x": 2027.1245722108144, "y": 146403.07159287055}, {"x": 2027.2067077344284, "y": 150157.37286566955}, {"x": 2027.2888432580423, "y": 153990.3965941153}, {"x": 2027.3709787816565, "y": 157903.42878287993}, {"x": 2027.4531143052704, "y": 161897.77054077227}, {"x": 2027.5352498288844, "y": 165974.7381894168}, {"x": 2027.6173853524983, "y": 170135.66337222364}, {"x": 2027.6995208761123, "y": 174381.89316365035}, {"x": 2027.7816563997262, "y": 178714.7901787548}, {"x": 2027.8637919233402, "y": 183135.73268303796}, {"x": 2027.945927446954, "y": 187646.11470257686}, {"x": 2028.028062970568, "y": 192247.34613444694}, {"x": 2028.110198494182, "y": 196940.85285743303}, {"x": 2028.192334017796, "y": 201728.07684302898}, {"x": 2028.27446954141, "y": 206610.47626672476}, {"x": 2028.356605065024, "y": 211589.52561958137}, {"x": 2028.438740588638, "y": 216666.7158200922}, {"x": 2028.520876112252, "y": 221843.5543263311}, {"x": 2028.6030116358659, "y": 227121.56524838594}, {"x": 2028.6851471594798, "y": 232502.28946107824}, {"x": 2028.7672826830938, "y": 237987.2847169669}, {"x": 2028.8494182067077, "y": 243578.12575963713}, {"x": 2028.9315537303216, "y": 249276.4044372726}, {"x": 2029.0136892539356, "y": 255083.7298165121}, {"x": 2029.0958247775495, "y": 261001.72829658794}, {"x": 2029.1779603011637, "y": 267032.0437237482}, {"x": 2029.2600958247776, "y": 273176.3375059601}, {"x": 2029.3422313483916, "y": 279436.28872789553}, {"x": 2029.4243668720055, "y": 285813.5942661977}, {"x": 2029.5065023956195, "y": 292309.96890502825}, {"x": 2029.5886379192334, "y": 298927.1454518949}, {"x": 2029.6707734428473, "y": 305666.8748537588}, {"x": 2029.7529089664613, "y": 312530.9263134213}, {"x": 2029.8350444900752, "y": 319521.0874061895}, {"x": 2029.9171800136892, "y": 326639.1641968205}, {"x": 2029.9993155373031, "y": 333886.98135674355}, {"x": 2030.0814510609173, "y": 341266.3822815597}, {"x": 2030.1635865845312, "y": 348779.22920881887}, {"x": 2030.2457221081452, "y": 356427.4033360734}, {"x": 2030.3278576317591, "y": 364212.80493920797}, {"x": 2030.409993155373, "y": 372137.3534910455}, {"x": 2030.492128678987, "y": 380202.98778022826}, {"x": 2030.574264202601, "y": 388411.66603037436}, {"x": 2030.6563997262149, "y": 396765.3660195083}, {"x": 2030.7385352498288, "y": 405266.08519976604}];
+        const powerData = [{"x": 2025.8104038329911, "y": 97304.0}, {"x": 2025.892539356605, "y": 99996.4849192022}, {"x": 2025.974674880219, "y": 102749.86892550095}, {"x": 2026.056810403833, "y": 105565.2247440947}, {"x": 2026.138945927447, "y": 108443.63868090425}, {"x": 2026.2210814510609, "y": 111386.21072786591}, {"x": 2026.3032169746748, "y": 114394.05466852932}, {"x": 2026.3853524982887, "y": 117468.29818395915}, {"x": 2026.467488021903, "y": 120610.0829589406}, {"x": 2026.5496235455169, "y": 123820.56478848752}, {"x": 2026.6317590691308, "y": 127100.91368465309}, {"x": 2026.7138945927447, "y": 130452.31398364213}, {"x": 2026.7960301163587, "y": 133875.96445322476}, {"x": 2026.8781656399726, "y": 137373.07840045055}, {"x": 2026.9603011635866, "y": 140944.88377966284}, {"x": 2027.0424366872005, "y": 144592.62330081264}, {"x": 2027.1245722108144, "y": 148317.55453807136}, {"x": 2027.2067077344284, "y": 152120.95003874222}, {"x": 2027.2888432580423, "y": 156004.09743246916}, {"x": 2027.3709787816565, "y": 159968.29954074367}, {"x": 2027.4531143052704, "y": 164014.87448670776}, {"x": 2027.5352498288844, "y": 168145.15580525377}, {"x": 2027.6173853524983, "y": 172360.49255341964}, {"x": 2027.6995208761123, "y": 176662.2494210794}, {"x": 2027.7816563997262, "y": 181051.80684192863}, {"x": 2027.8637919233402, "y": 185530.56110476353}, {"x": 2027.945927446954, "y": 190099.92446505436}, {"x": 2028.028062970568, "y": 194761.32525681145}, {"x": 2028.110198494182, "y": 199516.20800474414}, {"x": 2028.192334017796, "y": 204366.0335367118}, {"x": 2028.27446954141, "y": 209312.27909646623}, {"x": 2028.356605065024, "y": 214356.43845668572}, {"x": 2028.438740588638, "y": 219500.02203229902}, {"x": 2028.520876112252, "y": 224744.55699410007}, {"x": 2028.6030116358659, "y": 230091.5873826519}, {"x": 2028.6851471594798, "y": 235542.67422248}, {"x": 2028.7672826830938, "y": 241099.39563655414}, {"x": 2028.8494182067077, "y": 246763.34696105836}, {"x": 2028.9315537303216, "y": 252536.1408604487}, {"x": 2029.0136892539356, "y": 258419.40744279834}, {"x": 2029.0958247775495, "y": 264414.79437542893}, {"x": 2029.1779603011637, "y": 270523.9670008287}, {"x": 2029.2600958247776, "y": 276748.6084528563}, {"x": 2029.3422313483916, "y": 283090.4197732295}, {"x": 2029.4243668720055, "y": 289551.1200282994}, {"x": 2029.5065023956195, "y": 296132.44642610854}, {"x": 2029.5886379192334, "y": 302836.15443373297}, {"x": 2029.6707734428473, "y": 309664.01789490826}, {"x": 2029.7529089664613, "y": 316617.829147938}, {"x": 2029.8350444900752, "y": 323699.39914388495}, {"x": 2029.9171800136892, "y": 330910.55756504484}, {"x": 2029.9993155373031, "y": 338253.15294370084}, {"x": 2030.0814510609173, "y": 345729.05278116034}, {"x": 2030.1635865845312, "y": 353340.1436670718}, {"x": 2030.2457221081452, "y": 361088.33139902225}, {"x": 2030.3278576317591, "y": 368975.54110241437}, {"x": 2030.409993155373, "y": 377003.71735062357}, {"x": 2030.492128678987, "y": 385174.8242854337}, {"x": 2030.574264202601, "y": 393490.8457377514}, {"x": 2030.6563997262149, "y": 401953.785348599}, {"x": 2030.7385352498288, "y": 410565.6666903844}];
         const initialTotalMw = 34192.11845829051;
         const startBlock = 499500;
         const initialCurrentBlock = 920798;
@@ -610,10 +610,10 @@
             });
 
             tooltip.addEventListener('mouseleave', function() {
-                // Set a timeout to hide after 3 seconds (adjust as needed)
+                // Set a timeout to hide after 5 seconds (adjust as needed)
                 timeout = setTimeout(function() {
                     tooltipText.classList.remove('visible');
-                }, 3000);
+                }, 5000);
             });
         });
         // Paramètres de simulation
@@ -623,7 +623,7 @@
         const BLOCKS_PER_DAY = 144;
         const DAYS_PER_YEAR = 365.25;
         const FEES_PER_BLOCK = 0.022;
-        let A_POWER_LAW = 5.871451091646496e-17;  // Calibré initialement
+        let A_POWER_LAW = 5.948230853547921e-17;  // Calibré initialement
         let ANNUAL_GROWTH_RATE = 1.5;  // 50% initial
         let FRENCH_HASH_EH_S = BASE_FRENCH_HASH_EH_S * 1;  // Initial pour 1 GW
         
@@ -677,7 +677,7 @@
             
             // Recalculer A si exposant change (calibré sur prix actuel ~123000 USD)
             const currentDays = getDaysFromGenesis(2025);
-            const currentPrice = 96048;
+            const currentPrice = 96008;
             A_POWER_LAW = currentPrice / Math.pow(currentDays, exponent);
             
             // Calcul des données

@@ -322,10 +322,10 @@ def generate_html():
             z-index: 1;
             top: 125%;
             left: 50%;
-            margin-left: -45px;
+            margin-left: -38px;
             margin-bottom: -45px;
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: opacity 0.001s;
             border: 1px solid #F7931A;
             font-size: 0.9em;
             line-height: 1.4;
@@ -334,9 +334,9 @@ def generate_html():
             content: "";
             position: absolute;
             bottom: 100%;
-            right: 80%;
+            right: 85%;
             margin-left: -5px;
-            border-width: 5px;
+            border-width: 10px;
             border-style: solid;
             border-color: #F7931A transparent transparent transparent;
         }}
@@ -348,7 +348,7 @@ def generate_html():
         .tooltip .tooltip-icon {{
             color: #0066cc;
             font-weight: bold;
-            font-size: 0.7em;
+            font-size: 1em;
             margin-left: 2px;
             vertical-align: super;
         }}
@@ -367,7 +367,7 @@ def generate_html():
         border-radius: 3px;
         }}
 
-        /* Inpiut Track */
+        /* Input Track */
 
         /* Chrome, Safari, Edge (Chromium) */
         input[type="range"]::-webkit-slider-runnable-track {{
@@ -756,10 +756,10 @@ def generate_html():
             }});
 
             tooltip.addEventListener('mouseleave', function() {{
-                // Set a timeout to hide after 3 seconds (adjust as needed)
+                // Set a timeout to hide after 5 seconds (adjust as needed)
                 timeout = setTimeout(function() {{
                     tooltipText.classList.remove('visible');
-                }}, 3000);
+                }}, 5000);
             }});
         }});
         // Paramètres de simulation
