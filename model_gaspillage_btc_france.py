@@ -665,6 +665,7 @@ def generate_html():
             }}
         }}
 
+
         // Initialisation
         window.onload = () => {{
             // Animation initiale avec share=10%
@@ -743,7 +744,24 @@ def generate_html():
             setInterval(updateData, 600000);
         }};
 
+        document.querySelectorAll('.tooltip').forEach(function(tooltip) {{
+            const tooltipText = tooltip.querySelector('.tooltiptext');
+            let timeout;
 
+            tooltip.addEventListener('mouseenter', function() {{
+                // Clear any existing timeout to prevent premature hide
+                if (timeout) clearTimeout(timeout);
+                // Show the tooltip
+                tooltipText.classList.add('visible');
+            }});
+
+            tooltip.addEventListener('mouseleave', function() {{
+                // Set a timeout to hide after 3 seconds (adjust as needed)
+                timeout = setTimeout(function() {{
+                    tooltipText.classList.remove('visible');
+                }}, 3000);
+            }});
+        }});
         // Paramètres de simulation
         const GENESIS_DATE = new Date(2009, 0, 3);  // 3 janv 2009
         const CURRENT_HASH_EH_S = 1000;  // Hash global actuel (EH/s)
