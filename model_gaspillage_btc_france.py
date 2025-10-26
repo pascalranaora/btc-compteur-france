@@ -474,6 +474,7 @@ def generate_html():
             <br />
                 <button type="button" class="collapsible"><h4>Effectuer une simulation complète : Minage Bitcoin - France (En Euro)</h4></button>
                 <div class="collapsible-content">
+                    <p style="color: #FF9900;">Un site dédié a été créé : <b><a target="_blank" href="https://www.simulateur-bitcoin.fr">https://www.simulateur-bitcoin.fr</a></b>.</p>
                     <p style="color: #FF9900;">Cette simulation modélise un déploiement variable sur surplus EDF (2026-2032), avec loi de puissance pour le prix BTC (en USD, convertis en EUR), halving 2028, et croissance du hash global. Glissez les sliders pour ajuster les paramètres et voir les mises à jour en temps réel. <span class="tooltip"><span class="tooltiptext">"La France" = l'État français (gouvernement, via Ministère Économie/Transition Écologique), pas la Banque de France. Initiative publique pour souveraineté numérique, comme un projet d'infrastructure (ex. TGV). Sécurité : Data centers blindés (ANSSI audits), wallets offline multi-sig. Pourquoi 2018 ? Équilibre : post-bulle 2017, maturité tech, inclut 2 halvings ; pas 2015 (trop volatile), pas 2021 (moins de recul).</span></span></p>
                     
                     <div class="slider-container">
