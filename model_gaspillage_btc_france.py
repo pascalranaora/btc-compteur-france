@@ -737,9 +737,7 @@ def generate_html():
             }});
             
             // Première mise à jour immédiate pour synchroniser
-            setTimeout(updateData, 10000);
-            setTimeout(updateData, 10000);
-            setTimeout(updateData, 10000);
+            setTimeout(updateData, 1);
             
             // Mises à jour toutes les minutes
             setInterval(updateData, 600000);
