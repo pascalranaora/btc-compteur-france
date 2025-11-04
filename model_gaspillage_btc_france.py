@@ -667,11 +667,11 @@ def generate_html():
         }}
 
 
-        // Initialisation
-        window.onload = () => {{
-            // Animation initiale avec share=10%
+         // Initialisation
+        window.onload = async () => {{
+            // 1. Animation initiale avec les données Python (fallback)
             const initialShare = 0.10;
-            const initialMw = initialTotalMw * initialShare;
+            const initialMw = {result['initial_total_mw']} * initialShare;
             
             document.getElementById('totalEurosCounter').textContent = '0';
             document.getElementById('btcCounter').textContent = '0';
@@ -679,21 +679,21 @@ def generate_html():
             document.getElementById('blocksCounter').textContent = '0';
             document.getElementById('mwhCounter').textContent = '0';
             
-            animateCounter('totalEurosCounter', initialTotalEuros, 3000, ' €');
-            animateCounter('btcCounter', initialBtc, 3000, ' BTC');
-            animateCounter('priceCounter', initialPrice, 2000, ' €');
-            animateCounter('blocksCounter', initialBlocks, 2000, '');
+            animateCounter('totalEurosCounter', {result['total_euros_past']}, 3000, ' €');
+            animateCounter('btcCounter', {result['france_btc_past']}, 3000, ' BTC');
+            animateCounter('priceCounter', {result['price_eur']}, 2000, ' €');
+            animateCounter('blocksCounter', {result['initial_blocks']}, 2000, '');
             animateCounter('mwhCounter', initialMw, 2000, ' MW');
-            
-            // Graphique Chart.js avec historique et loi de puissance
+
+            // 2. Graphique initial avec données Python
             const ctx = document.getElementById('powerLawChart').getContext('2d');
-            new Chart(ctx, {{
+            window.powerLawChart = new Chart(ctx, {{
                 type: 'line',
                 data: {{
                     datasets: [
                         {{
                             label: 'Prix Historique (EUR)',
-                            data: histData,
+                            data: {json.dumps(result['hist_points'])},
                             borderColor: '#F7931A',
                             backgroundColor: 'rgba(247, 147, 26, 0.1)',
                             tension: 0.1,
@@ -702,7 +702,7 @@ def generate_html():
                         }},
                         {{
                             label: 'Loi de Puissance (exposant 5.6)',
-                            data: powerData,
+                            data: {json.dumps(result['power_points'])},
                             borderColor: '#FF6B35',
                             backgroundColor: 'transparent',
                             tension: 0.1,
@@ -716,32 +716,72 @@ def generate_html():
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {{
-                        x: {{
-                            type: 'linear',
-                            ticks: {{ color: '#fff' }},
-                            grid: {{ color: 'rgba(255,255,255,0.1)' }},
-                            title: {{ display: true, text: 'Année', color: '#fff' }}
-                        }},
-                        y: {{
-                            type: 'linear',
-                            ticks: {{ color: '#fff' }},
-                            grid: {{ color: 'rgba(255,255,255,0.1)' }},
-                            title: {{ display: true, text: 'Prix BTC (€)', color: '#fff' }},
-                            beginAtZero: true
-                        }}
+                        x: {{ type: 'linear', ticks: {{ color: '#fff' }}, grid: {{ color: 'rgba(255,255,255,0.1)' }}, title: {{ display: true, text: 'Année', color: '#fff' }} }},
+                        y: {{ type: 'linear', ticks: {{ color: '#fff' }}, grid: {{ color: 'rgba(255,255,255,0.1)' }}, title: {{ display: true, text: 'Prix BTC (€)', color: '#fff' }}, beginAtZero: true }}
                     }},
-                    plugins: {{
-                        legend: {{ labels: {{ color: '#fff' }} }}
-                    }}
+                    plugins: {{ legend: {{ labels: {{ color: '#fff' }} }} }}
                 }}
             }});
-            
-            // Première mise à jour immédiate pour synchroniser
-            setTimeout(updateData, 600000);
-            setTimeout(updateData, 600000);
-            // Mises à jour toutes les minutes
+
+            // 3. MISE À JOUR IMMÉDIATE AU CHARGEMENT
+            await updateData();  // Rafraîchit tout : bloc, prix, hash rate, graphiques
+
+            // 4. Puis mise à jour toutes les 10 minutes
             setInterval(updateData, 600000);
         }};
+
+        // Fonction mise à jour (inchangée, sauf qu'elle met à jour le graphique aussi)
+        async function updateData() {{
+            try {{
+                const [heightRes, priceRes, hrRes] = await Promise.all([
+                    fetch('https://blockstream.info/api/blocks/tip/height'),
+                    fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=eur'),
+                    fetch('https://api.blockchain.info/charts/hash-rate?format=json&cors=true')
+                ]);
+
+                const newHeight = parseInt(await heightRes.text());
+                const priceData = await priceRes.json();
+                const newPrice = priceData.bitcoin.eur;
+                const hashData = await hrRes.json();
+                const hr_ths = hashData.values[hashData.values.length - 1].y;
+                const eff = 30;
+                const total_mw = (hr_ths * eff) / 1000000;
+                const newBlocks = newHeight - {result['start_block']};
+
+                // Mise à jour des compteurs
+                updateAllCounters(newHeight, newPrice, newBlocks, total_mw);
+
+                // Mise à jour du graphique de loi de puissance
+                const currentDays = daysSinceGenesis();
+                const A = newPrice / Math.pow(currentDays, {result['exponent']});
+                const powerPoints = [];
+                for (let i = 0; i <= 5 * 365; i += 30) {{
+                    const day = currentDays + i;
+                    const year = 2009 + (day / 365.25);
+                    const price = A * Math.pow(day, {result['exponent']});
+                    powerPoints.push({{x: year, y: price}});
+                }}
+
+                // Mettre à jour le dataset
+                window.powerLawChart.data.datasets[1].data = powerPoints;
+                window.powerLawChart.update('quiet');
+
+                // Mettre à jour la simulation si ouverte
+                if (typeof updateSimulation === 'function') {{
+                    A_POWER_LAW = newPrice / Math.pow(getDaysFromGenesis(2025), parseFloat(document.getElementById('exponentSlider')?.value || 5.6));
+                    updateSimulation();
+                }}
+
+                document.getElementById('updateText').textContent = `Dernière mise à jour: ${{new Date().toLocaleString('fr-FR')}}`;
+
+                lastHeight = newHeight;
+                lastPrice = newPrice;
+                lastTotalMw = total_mw;
+
+            }} catch (e) {{
+                console.error('Erreur mise à jour:', e);
+            }}
+        }}
 
         document.querySelectorAll('.tooltip').forEach(function(tooltip) {{
             const tooltipText = tooltip.querySelector('.tooltiptext');
