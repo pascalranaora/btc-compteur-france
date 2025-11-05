@@ -782,7 +782,14 @@ def generate_html():
                 console.error('Erreur mise à jour:', e);
             }}
         }}
-
+        
+        // Fonction pour calculer les jours depuis genèse
+        function daysSinceGenesis() {{
+            const genesis = new Date(2009, 0, 3);
+            const now = new Date();
+            return Math.floor((now - genesis) / (1000 * 60 * 60 * 24));
+        }}
+        
         document.querySelectorAll('.tooltip').forEach(function(tooltip) {{
             const tooltipText = tooltip.querySelector('.tooltiptext');
             let timeout;
