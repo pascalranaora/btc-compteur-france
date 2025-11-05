@@ -56,7 +56,7 @@ def get_historical_prices(current_date):
         return points
     except Exception as e:
         print(f"Erreur hist: {e}")
-        return [{'x': 2018.0, 'y': 10000}, {'x': 2025.0, 'y': 97000}]  # Dummy fallback
+        return [{'x': 2018.0, 'y': 10000}, {'x': 2025.0, 'y': 88266}]  # Dummy fallback
 
 def get_power_law_points(current_date, exponent=5.6, years_ahead=5):
     """Génère des points pour la courbe de loi de puissance."""
