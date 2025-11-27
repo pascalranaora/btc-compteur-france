@@ -584,11 +584,11 @@ def generate_html():
             const newTotalEuros = Math.floor(newTotalBtc * newPrice);
             const newMw = totalMw * share;
             
-            animateCounter('totalEurosCounter', newTotalEuros, 1000, ' €');
-            animateCounter('btcCounter', newTotalBtc, 1000, ' BTC');
-            animateCounter('priceCounter', newPrice, 1000, ' €');
-            animateCounter('blocksCounter', newBlocks, 1000, '');
-            animateCounter('mwhCounter', newMw, 1000, ' MW');
+            animateCounter('totalEurosCounter', newTotalEuros, 5000, ' €');
+            animateCounter('btcCounter', newTotalBtc, 5000, ' BTC');
+            animateCounter('priceCounter', newPrice, 5000, ' €');
+            animateCounter('blocksCounter', newBlocks, 5000, '');
+            animateCounter('mwhCounter', newMw, 5000, ' MW');
         }}
 
         // Données embeddées initiales
@@ -714,7 +714,12 @@ def generate_html():
             }});
             // 2b. Tenter une première mise à jour complète (compteurs + graphiques)
             await updateData();
-
+            //animateCounter('totalEurosCounter', {result['total_euros_past']}, 3000, ' €');
+            //animateCounter('btcCounter', {result['france_btc_past']}, 3000, ' BTC');
+            //animateCounter('priceCounter', {result['price_eur']}, 2000, ' €');
+            //animateCounter('blocksCounter', {result['initial_blocks']}, 2000, '');
+            //animateCounter('mwhCounter', initialMw, 2000, ' MW');
+            
             // 3. Puis mise à jour toutes les 10 minutes (déjà en place)
             setInterval(updateData, 600000);
 
