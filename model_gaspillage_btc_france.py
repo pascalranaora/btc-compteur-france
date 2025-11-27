@@ -666,26 +666,16 @@ def generate_html():
             }}
         }}
 
-
-         // Initialisation
+        // Initialisation
         window.onload = async () => {{
-            // 1. Animation initiale avec les données Python (fallback)
-            const initialShare = 0.10;
-            const initialMw = {result['initial_total_mw']} * initialShare;
-            
-            document.getElementById('totalEurosCounter').textContent = '0';
-            document.getElementById('btcCounter').textContent = '0';
-            document.getElementById('priceCounter').textContent = '0';
+            // 1. Initialiser les compteurs à 0 (pour l'animation)
+            document.getElementById('totalEurosCounter').textContent = '0 €';
+            document.getElementById('btcCounter').textContent = '0 BTC';
+            document.getElementById('priceCounter').textContent = '0 €';
             document.getElementById('blocksCounter').textContent = '0';
-            document.getElementById('mwhCounter').textContent = '0';
+            document.getElementById('mwhCounter').textContent = '0 MW';
             
-            animateCounter('totalEurosCounter', {result['total_euros_past']}, 3000, ' €');
-            animateCounter('btcCounter', {result['france_btc_past']}, 3000, ' BTC');
-            animateCounter('priceCounter', {result['price_eur']}, 2000, ' €');
-            animateCounter('blocksCounter', {result['initial_blocks']}, 2000, '');
-            animateCounter('mwhCounter', initialMw, 2000, ' MW');
-
-            // 2. Graphique initial avec données Python
+            // 2a. Graphique initial avec données Python
             const ctx = document.getElementById('powerLawChart').getContext('2d');
             window.powerLawChart = new Chart(ctx, {{
                 type: 'line',
@@ -722,13 +712,77 @@ def generate_html():
                     plugins: {{ legend: {{ labels: {{ color: '#fff' }} }} }}
                 }}
             }});
+            // 2b. Tenter une première mise à jour complète (compteurs + graphiques)
+            await updateData();
 
-            // 3. MISE À JOUR IMMÉDIATE AU CHARGEMENT
-            await updateData();  // Rafraîchit tout : bloc, prix, hash rate, graphiques
-
-            // 4. Puis mise à jour toutes les 10 minutes
+            // 3. Puis mise à jour toutes les 10 minutes (déjà en place)
             setInterval(updateData, 600000);
+
+            // 4. Initialisation de la simulation (si le panneau est ouvert)
+            updateSimulation();
         }};
+         // Initialisation
+        //window.onload = async () => {{
+        //    // 1. Animation initiale avec les données Python (fallback)
+        //    const initialShare = 0.10;
+        //    const initialMw = {result['initial_total_mw']} * initialShare;
+        //    
+        //    document.getElementById('totalEurosCounter').textContent = '0';
+        //    document.getElementById('btcCounter').textContent = '0';
+        //    document.getElementById('priceCounter').textContent = '0';
+        //    document.getElementById('blocksCounter').textContent = '0';
+        //    document.getElementById('mwhCounter').textContent = '0';
+        //    
+        //    animateCounter('totalEurosCounter', {result['total_euros_past']}, 3000, ' €');
+        //    animateCounter('btcCounter', {result['france_btc_past']}, 3000, ' BTC');
+        //    animateCounter('priceCounter', {result['price_eur']}, 2000, ' €');
+        //    animateCounter('blocksCounter', {result['initial_blocks']}, 2000, '');
+        //    animateCounter('mwhCounter', initialMw, 2000, ' MW');
+
+        //    // 2. Graphique initial avec données Python
+        //    const ctx = document.getElementById('powerLawChart').getContext('2d');
+        //    window.powerLawChart = new Chart(ctx, {{
+        //        type: 'line',
+        //        data: {{
+        //            datasets: [
+        //                {{
+        //                    label: 'Prix Historique (EUR)',
+        //                    data: {json.dumps(result['hist_points'])},
+        //                    borderColor: '#F7931A',
+        //                    backgroundColor: 'rgba(247, 147, 26, 0.1)',
+        //                    tension: 0.1,
+        //                    pointRadius: 0,
+        //                    fill: false
+        //                }},
+        //                {{
+        //                    label: 'Loi de Puissance (exposant 5.6)',
+        //                    data: {json.dumps(result['power_points'])},
+        //                    borderColor: '#FF6B35',
+        //                    backgroundColor: 'transparent',
+        //                    tension: 0.1,
+        //                    pointRadius: 0,
+        //                    fill: false,
+        //                    borderDash: [5, 5]
+        //                }}
+        //             ]
+        //         }},
+        //         options: {{
+        //             responsive: true,
+        //             maintainAspectRatio: false,
+        //             scales: {{
+        //                x: {{ type: 'linear', ticks: {{ color: '#fff' }}, grid: {{ color: 'rgba(255,255,255,0.1)' }}, title: {{ display: true, text: 'Année', color: '#fff' }} }},
+        //                y: {{ type: 'linear', ticks: {{ color: '#fff' }}, grid: {{ color: 'rgba(255,255,255,0.1)' }}, title: {{ display: true, text: 'Prix BTC (€)', color: '#fff' }}, beginAtZero: true }}
+        //             }},
+        //             plugins: {{ legend: {{ labels: {{ color: '#fff' }} }} }}
+        //         }}
+        //     }});
+
+        //     // 3. MISE À JOUR IMMÉDIATE AU CHARGEMENT
+        //     await updateData();  // Rafraîchit tout : bloc, prix, hash rate, graphiques
+
+        //     // 4. Puis mise à jour toutes les 10 minutes
+        //     setInterval(updateData, 600000);
+        // }};
 
         // Fonction mise à jour (inchangée, sauf qu'elle met à jour le graphique aussi)
         async function updateData() {{
