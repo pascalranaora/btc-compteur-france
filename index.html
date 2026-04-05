@@ -299,9 +299,15 @@
         </div>
         
         <div class="right">
-            <h2>Prix Historique BTC (EUR) & Loi de Puissance (exposant 5.6)</h2>
-            <canvas id="powerLawChart" style="width: 100%; height: 500px; max-height: none;"></canvas>
-            <p>La loi de puissance modélise la croissance du prix BTC : P(t) = a * t^5.6, où t = jours depuis genèse (2009). Calibrée sur prix actuel, elle projette une hausse ~35-40%/an. Exposant 5.6 est historique (basé sur données 2010-2025).</p>
+            <h2>Prix Historique BTC (USD) & Loi de Puissance (exposant 5.83)</h2>
+
+            <div style="position: relative; height: 500px; width: 100%; margin-bottom: 10px;">
+                <canvas id="powerLawChart"></canvas>
+            </div>
+
+            <div id="selectedPointInfo" style="display: none; padding: 15px; margin-bottom: 30px; background: rgba(247, 147, 26, 0.1); border: 1px solid #F7931A; border-radius: 8px; font-size: 0.95em; color: #fff;">
+                </div>
+            <p>La loi de puissance modélise la croissance du prix BTC : P(t) = a * t^5.83, où t = jours depuis genèse (2009). Calibrée sur prix actuel, elle projette une hausse ~35-40%/an. Exposant 5.83 est historique (basé sur données 2010-2025).</p>
             <div class="additional-text">
                 <ul>
                     <li>Ce manque à gagner n'inclut pas les potentielles retombées économiques de réindustrialiser la France avec une nouvelle industrie novatrice faisant de l'optimisation sous contraintes de réseaux électriques.</li>
@@ -338,9 +344,9 @@
                     </div>
                     
                     <div class="slider-container">
-                        <label>Exposant loi de puissance : <span class="tooltip"><span class="tooltiptext">Exposant dans P(t) = a * t^exposant. 5.6 est calibré historique ; plus haut = croissance plus agressive.</span></span></label>
-                        <input type="range" id="exponentSlider" min="4" max="7" step="0.1" value="5.6">
-                        <span id="exponentValue">5.6</span>
+                        <label>Exposant loi de puissance : <span class="tooltip"><span class="tooltiptext">Exposant dans P(t) = a * t^exposant. 5.83 est calibré historique ; plus haut = croissance plus agressive.</span></span></label>
+                        <input type="range" id="exponentSlider" min="4" max="7" step="0.1" value="5.83">
+                        <span id="exponentValue">5.83</span>
                     </div>
                     
                     <div class="slider-container">
@@ -519,54 +525,62 @@
                 updateAllCounters(lastHeight, lastPrice, lastHeight - startBlock, lastTotalMw);
             }
         }
-        // Fonction pour construire le graphique Power Law avec l'API CoinGecko
+        // Fonction pour construire le graphique Power Law avec vos données locales interactives
         async function buildPowerLawChart() {
             try {
-                // 1. Récupération de tout l'historique de prix depuis CoinGecko
-                const response = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCEUR');
+                // Lecture du fichier JSON depuis le GitHub Raw (Zéro Erreur CORS)
+                const response = await fetch('https://raw.githubusercontent.com/pascalranaora/BinaryStarSystem/main/v33_dashboard_data.json');
                 const data = await response.json();
                 
+                if (!data || !data.historical) {
+                    console.error("Impossible de lire les données historiques locales.");
+                    return;
+                }
+
                 const genesisDate = new Date(2009, 0, 3).getTime();
                 const MS_PER_DAY = 1000 * 60 * 60 * 24;
                 
-                // 2. Formatage des données historiques
                 const historicalData = [];
-                data.prices.forEach(p => {
-                    const timestamp = p[0];
-                    const price = p[1];
-                    const daysSinceGenesis = (timestamp - genesisDate) / MS_PER_DAY;
-                    
-                    if (daysSinceGenesis > 0 && price > 0) {
-                        historicalData.push({ x: daysSinceGenesis, y: price, date: timestamp });
+                
+                // Extraction des données historiques
+                data.historical.forEach(day => {
+                    if (day.actual_price != null) {
+                        const timestamp = new Date(day.date).getTime();
+                        const price = parseFloat(day.actual_price);
+                        const daysSinceGenesis = (timestamp - genesisDate) / MS_PER_DAY;
+                        
+                        if (daysSinceGenesis > 0 && price > 0) {
+                            historicalData.push({ x: daysSinceGenesis, y: price, date: timestamp });
+                        }
                     }
                 });
 
-                // 3. Génération des courbes du modèle Power Law
-                // Paramètres standards du modèle (ajustables)
-                // P = A * D^exponent. (A = 10^-17, exponent = 5.83)
+                // Modèle Power Law : Projection du jour 500 au jour 10000 (~ année 2036)
                 const fairData = [];
                 const supportData = [];
                 const resistanceData = [];
                 
-                // On projette du jour 500 au jour 10000 (~ année 2036)
                 for (let d = 500; d <= 10000; d += 50) {
-                    const fairPrice = Math.pow(10, -17) * Math.pow(d, 5.83);
-                    
+                    const fairPrice = Math.pow(10, -17) * Math.pow(d, 5.83); // Formule de Santostasi
                     fairData.push({ x: d, y: fairPrice });
-                    supportData.push({ x: d, y: fairPrice * 0.45 });   // Support (bas)
-                    resistanceData.push({ x: d, y: fairPrice * 12.0 }); // Résistance (haut)
+                    supportData.push({ x: d, y: fairPrice * 0.45 });   // Support bas
+                    resistanceData.push({ x: d, y: fairPrice * 12.0 }); // Résistance haute
                 }
 
-                // 4. Création du graphique Chart.js avec échelles Log-Log
                 const ctx = document.getElementById('powerLawChart').getContext('2d');
-                if (window.powerLawChart) window.powerLawChart.destroy();
 
-                window.powerLawChart = new Chart(ctx, {
+                // Nettoyage de l'ancienne instance pour éviter les conflits
+                if (window.powerLawChartInstance) {
+                    window.powerLawChartInstance.destroy();
+                }
+
+                // Création du nouveau graphique
+                window.powerLawChartInstance = new Chart(ctx, {
                     type: 'line',
                     data: {
                         datasets: [
                             {
-                                label: 'Prix Historique (EUR)',
+                                label: 'Prix Historique (USD)',
                                 data: historicalData,
                                 borderColor: 'rgba(255, 255, 255, 0.7)',
                                 borderWidth: 1.5,
@@ -604,17 +618,58 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
+                        
+                        // --- INTERACTIVITÉ ---
+                        // Changer le curseur en petite main au survol d'un point
+                        onHover: (event, elements, chart) => {
+                            const target = event.native ? event.native.target : event.target;
+                            target.style.cursor = elements && elements.length ? 'pointer' : 'default';
+                        },
+                        
+                        // Action au clic sur un point
+                        onClick: (event, elements, chart) => {
+                            if (elements.length > 0) {
+                                const element = elements[0];
+                                const datasetIndex = element.datasetIndex;
+                                const index = element.index;
+                                
+                                const dataset = chart.data.datasets[datasetIndex];
+                                const dataPoint = dataset.data[index];
+                                
+                                // Conversion des jours en date lisible
+                                const days = dataPoint.x;
+                                const price = dataPoint.y;
+                                const dateObj = new Date(genesisDate + days * MS_PER_DAY);
+                                
+                                const dateStr = dateObj.toLocaleDateString('fr-FR');
+                                const priceStr = '$' + price.toLocaleString('en-US', {maximumFractionDigits: 0});
+                                const datasetLabel = dataset.label;
+                                
+                                // Affichage dans la boîte HTML
+                                const infoBox = document.getElementById('selectedPointInfo');
+                                infoBox.style.display = 'block';
+                                infoBox.innerHTML = `
+                                    <span style="color: #ccc;">Série :</span> <strong style="color: #F7931A;">${datasetLabel}</strong> &nbsp;|&nbsp; 
+                                    <span style="color: #ccc;">Date :</span> <strong>${dateStr}</strong> &nbsp;|&nbsp; 
+                                    <span style="color: #ccc;">Prix :</span> <strong>${priceStr}</strong> &nbsp;|&nbsp; 
+                                    <span style="color: #ccc;">Jour :</span> <strong>${days.toFixed(0)}</strong>
+                                `;
+                            }
+                        },
+                        
                         scales: {
                             x: { 
                                 type: 'logarithmic',
-                                title: { display: true, text: 'Jours depuis le bloc Genesis (Échelle Log)', color: '#fff' },
+                                title: { display: true, text: 'Année (Échelle Log)', color: '#fff' },
                                 grid: { color: 'rgba(255,255,255,0.1)' },
                                 ticks: {
                                     color: '#fff',
+                                    // Remplacement des jours par l'Année YYYY
                                     callback: function(value) {
-                                        // Afficher des marqueurs clairs pour les jours
-                                        if ([100, 1000, 5000, 10000].includes(value)) {
-                                            return value + ' j';
+                                        const targetTicks = [500, 1000, 2000, 3000, 4000, 5000, 6000, 8000, 10000];
+                                        if (targetTicks.includes(value)) {
+                                            const date = new Date(genesisDate + value * MS_PER_DAY);
+                                            return date.getFullYear(); 
                                         }
                                         return null;
                                     }
@@ -622,14 +677,13 @@
                             },
                             y: { 
                                 type: 'logarithmic',
-                                title: { display: true, text: 'Prix BTC (€) - Échelle Log', color: '#fff' },
+                                title: { display: true, text: 'Prix BTC ($) - Échelle Log', color: '#fff' },
                                 grid: { color: 'rgba(255,255,255,0.1)' },
                                 ticks: {
                                     color: '#fff',
                                     callback: function(value) {
-                                        // Formatage propre des prix sur l'axe Y
                                         if ([0.1, 1, 10, 100, 1000, 10000, 100000, 1000000].includes(value)) {
-                                            return value.toLocaleString('fr-FR') + ' €';
+                                            return '$' + value.toLocaleString('en-US');
                                         }
                                         return null;
                                     }
@@ -641,13 +695,12 @@
                             tooltip: {
                                 callbacks: {
                                     title: function(context) {
-                                        // Convertir le nombre de jours en date réelle dans le tooltip
                                         const days = context[0].parsed.x;
                                         const date = new Date(genesisDate + days * MS_PER_DAY);
                                         return date.toLocaleDateString('fr-FR');
                                     },
                                     label: function(context) {
-                                        return context.dataset.label + ': ' + context.parsed.y.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'});
+                                        return context.dataset.label + ': $' + context.parsed.y.toLocaleString('en-US', {maximumFractionDigits: 0});
                                     }
                                 }
                             }
@@ -715,7 +768,7 @@
         //                    fill: false
         //                },
         //                {
-        //                    label: 'Loi de Puissance (exposant 5.6)',
+        //                    label: 'Loi de Puissance (exposant 5.83)',
         //                    data: [{"x": 2026.2511978097193, "y": 57927.0}, {"x": 2026.3333333333333, "y": 59488.484767371636}, {"x": 2026.4154688569472, "y": 61084.379501616524}, {"x": 2026.4976043805614, "y": 62715.274818857266}, {"x": 2026.5797399041753, "y": 64381.76862201662}, {"x": 2026.6618754277893, "y": 66084.466155881}, {"x": 2026.7440109514032, "y": 67823.98006231942}, {"x": 2026.8261464750171, "y": 69600.9304356573}, {"x": 2026.908281998631, "y": 71415.9448782052}, {"x": 2026.990417522245, "y": 73269.65855594179}, {"x": 2027.072553045859, "y": 75162.71425435109}, {"x": 2027.154688569473, "y": 77095.76243441353}, {"x": 2027.2368240930869, "y": 79069.46128875062}, {"x": 2027.3189596167008, "y": 81084.47679792301}, {"x": 2027.401095140315, "y": 83141.4827868813}, {"x": 2027.483230663929, "y": 85241.16098156999}, {"x": 2027.5653661875428, "y": 87384.20106568364}, {"x": 2027.6475017111568, "y": 89571.30073757531}, {"x": 2027.7296372347707, "y": 91803.16576731692}, {"x": 2027.8117727583847, "y": 94080.51005391142}, {"x": 2027.8939082819986, "y": 96404.05568265606}, {"x": 2027.9760438056126, "y": 98774.53298265718}, {"x": 2028.0581793292265, "y": 101192.68058449544}, {"x": 2028.1403148528404, "y": 103659.24547804204}, {"x": 2028.2224503764544, "y": 106174.9830704251}, {"x": 2028.3045859000686, "y": 108740.65724414616}, {"x": 2028.3867214236825, "y": 111357.04041534639}, {"x": 2028.4688569472964, "y": 114024.91359222261}, {"x": 2028.5509924709104, "y": 116745.0664335925}, {"x": 2028.6331279945243, "y": 119518.29730760874}, {"x": 2028.7152635181383, "y": 122345.41335062229}, {"x": 2028.7973990417522, "y": 125227.23052619383}, {"x": 2028.8795345653662, "y": 128164.5736842539}, {"x": 2028.96167008898, "y": 131158.27662041082}, {"x": 2029.043805612594, "y": 134209.18213540653}, {"x": 2029.125941136208, "y": 137318.1420947201}, {"x": 2029.208076659822, "y": 140486.01748831832}, {"x": 2029.290212183436, "y": 143713.67849055375}, {"x": 2029.37234770705, "y": 147002.0045202092}, {"x": 2029.454483230664, "y": 150351.88430068907}, {"x": 2029.536618754278, "y": 153764.21592035727}, {"x": 2029.6187542778919, "y": 157239.90689302058}, {"x": 2029.7008898015058, "y": 160779.87421855875}, {"x": 2029.7830253251198, "y": 164385.04444369962}, {"x": 2029.8651608487337, "y": 168056.35372294014}, {"x": 2029.9472963723476, "y": 171794.74787961217}, {"x": 2030.0294318959616, "y": 175601.18246709357}, {"x": 2030.1115674195755, "y": 179476.62283016395}, {"x": 2030.1937029431897, "y": 183422.0441665049}, {"x": 2030.2758384668036, "y": 187438.4315883445}, {"x": 2030.3579739904176, "y": 191526.78018424596}, {"x": 2030.4401095140315, "y": 195688.09508104008}, {"x": 2030.5222450376455, "y": 199923.3915059012}, {"x": 2030.6043805612594, "y": 204233.694848567}, {"x": 2030.6865160848733, "y": 208620.04072370063}, {"x": 2030.7686516084873, "y": 213083.47503339685}, {"x": 2030.8507871321012, "y": 217625.05402983012}, {"x": 2030.9329226557152, "y": 222245.84437804544}, {"x": 2031.0150581793291, "y": 226946.9232188917}, {"x": 2031.0971937029433, "y": 231729.3782320969}, {"x": 2031.1793292265572, "y": 236594.30769948533}],
         //                    borderColor: '#FF6B35',
         //                    backgroundColor: 'transparent',
@@ -745,46 +798,54 @@
         // };
 
         // Fonction mise à jour (inchangée, sauf qu'elle met à jour le graphique aussi)
-        async function updateData() {
-            try {
-                const [heightRes, priceRes, hrRes] = await Promise.all([
-                    fetch('https://blockstream.info/api/blocks/tip/height'),
-                    fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=eur'),
-                    fetch('https://api.blockchain.info/charts/hash-rate?format=json&cors=true')
-                ]);
+        // Fonction pour mettre à jour les compteurs en direct toutes les 10 min
+        // async function updateData() {
+        //     try {
+        //         // La Solution 2 (Binance) est parfaite ici car on ne veut que le prix à l'instant T
+        //         const response = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCEUR');
+        //         const data = await response.json();
+                
+        //         // Binance renvoie un "string", on le convertit en nombre
+        //         const newPrice = parseFloat(data.price);
+                
+        //         if (isNaN(newPrice)) throw new Error("Prix invalide reçu de Binance");
 
-                const newHeight = parseInt(await heightRes.text());
-                const priceData = await priceRes.json();
-                const newPrice = priceData.bitcoin.eur;
-                const hashData = await hrRes.json();
-                const hr_ths = hashData.values[hashData.values.length - 1].y;
-                const eff = 30;
-                const total_mw = (hr_ths * eff) / 1000000;
-                const newBlocks = newHeight - 499500;
+        //         // 1. Mise à jour du prix affiché
+        //         document.getElementById('priceCounter').textContent = newPrice.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR'});
 
-                // Mise à jour des compteurs
-                updateAllCounters(newHeight, newPrice, newBlocks, total_mw);
+        //         // 2. Calcul du nombre de Bitcoins minés (estimation)
+        //         const genesisDate = new Date(2009, 0, 3).getTime();
+        //         const now = new Date().getTime();
+        //         const msPerBlock = 10 * 60 * 1000; // 10 minutes par bloc
+        //         const blocks = Math.floor((now - genesisDate) / msPerBlock);
+                
+        //         let totalBtc = 0;
+        //         let reward = 50;
+        //         let remainingBlocks = blocks;
+                
+        //         while (remainingBlocks > 0) {
+        //             const blocksInEra = Math.min(remainingBlocks, 210000);
+        //             totalBtc += blocksInEra * reward;
+        //             remainingBlocks -= blocksInEra;
+        //             reward /= 2;
+        //         }
 
-                // Mettre à jour le dataset
-                window.powerLawChart.data.datasets[1].data = powerPoints;
-                window.powerLawChart.update('quiet');
+        //         document.getElementById('btcCounter').textContent = Math.floor(totalBtc).toLocaleString('fr-FR') + ' BTC';
+        //         document.getElementById('blocksCounter').textContent = blocks.toLocaleString('fr-FR');
 
-                // Mettre à jour la simulation si ouverte
-                if (typeof updateSimulation === 'function') {
-                    A_POWER_LAW = newPrice / Math.pow(getDaysFromGenesis(2025), parseFloat(document.getElementById('exponentSlider')?.value || 5.6));
-                    updateSimulation();
-                }
+        //         // 3. Calcul de la capitalisation
+        //         const totalEuros = totalBtc * newPrice;
+        //         document.getElementById('totalEurosCounter').textContent = totalEuros.toLocaleString('fr-FR', {style: 'currency', currency: 'EUR', maximumFractionDigits: 0});
 
-                document.getElementById('updateText').textContent = `Dernière mise à jour: ${new Date().toLocaleString('fr-FR')}`;
+        //         // 4. Estimation de l'énergie (basique)
+        //         const energyPerBlock = 1000; // valeur arbitraire pour l'exemple MWh
+        //         const totalEnergy = blocks * energyPerBlock;
+        //         document.getElementById('mwhCounter').textContent = totalEnergy.toLocaleString('fr-FR') + ' MWh';
 
-                lastHeight = newHeight;
-                lastPrice = newPrice;
-                lastTotalMw = total_mw;
-
-            } catch (e) {
-                console.error('Erreur mise à jour:', e);
-            }
-        }
+        //     } catch (error) {
+        //         console.error("Erreur de la mise à jour en direct :", error);
+        //     }
+        // }
         
         // Fonction pour calculer les jours depuis genèse
         function daysSinceGenesis() {
@@ -814,7 +875,7 @@
         // Paramètres de simulation
         const GENESIS_DATE = new Date(2009, 0, 3);  // 3 janv 2009
         const CURRENT_HASH_EH_S = 1000;  // Hash global actuel (EH/s)
-        const BASE_FRENCH_HASH_EH_S = 55.6;   // Pour 1 GW à 18 J/TH
+        const BASE_FRENCH_HASH_EH_S = 55.83;   // Pour 1 GW à 18 J/TH
         const BLOCKS_PER_DAY = 144;
         const DAYS_PER_YEAR = 365.25;
         const FEES_PER_BLOCK = 0.022;
